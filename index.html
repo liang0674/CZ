@@ -531,6 +531,45 @@ th[aria-sort]:not([aria-sort="none"]) .holding-sort span { opacity: 1; }
   #holdingColumnOptions label { display:inline-flex; align-items:center; gap:7px; padding:7px 11px; border-radius:9px; background:rgba(128,128,128,.12); cursor:pointer; }
   #holdingColumnOptions input { margin:0; accent-color:#d5ae76; }
   #holdingColumnStatus { margin-inline-start:10px; }
+  .reminder-heading { display:flex; align-items:center; justify-content:space-between; gap:12px; margin-bottom:10px; }
+  .reminder-heading h2 { margin:0; }
+  #reminderEditor { grid-template-columns:1fr; }
+  #reminderEditor[hidden], #editReminder[hidden] { display:none; }
+  #reminderStatus:empty { display:none; }
+  .review-category-select::after { right:16px; }
+  .review-category-select > select { padding-right:38px; min-height:40px; }
+  #codexHandoffDialog { box-sizing:border-box; width:min(660px,calc(100% - 32px)); max-height:85dvh; overflow:hidden; color:var(--ink); background:var(--card); padding:0; }
+  #codexHandoffDialog [hidden] { display:none !important; }
+  #codexHandoffDialog::backdrop { background:#0009; }
+  #codexHandoffDialog .v2-fields { grid-template-columns:minmax(0,1fr); }
+  #codexHandoffDialog input[type=text], #aiProjectPath { width:100%; color:var(--ink); background:var(--canvas); border:1px solid var(--border); border-radius:8px; padding:8px 10px; }
+  #codexHandoffDialog[open] { display:flex; flex-direction:column; }
+  .ai-heading { flex:none; display:flex; justify-content:space-between; align-items:flex-start; gap:12px; padding:20px 24px 14px; }
+  .ai-heading h2 { font-size:clamp(20px,4vw,26px); line-height:1.3; }
+  .ai-heading p { padding-top:5px; font-size:13px; }
+  #closeCodexHandoff { width:36px; height:36px; padding:0; flex:none; font-size:22px; line-height:1; }
+  .ai-scroll { min-height:0; overflow:auto; overscroll-behavior:contain; padding:0 24px 24px;
+    scrollbar-width:thin; scrollbar-color:rgba(170,161,148,.42) transparent; }
+  .ai-scroll::-webkit-scrollbar { width:7px; }
+  .ai-scroll::-webkit-scrollbar-track { background:transparent; }
+  .ai-scroll::-webkit-scrollbar-thumb { background:rgba(170,161,148,.42); border-radius:8px; }
+  @media (max-width:560px) {
+    .ai-heading { padding-inline:16px; }
+    .ai-scroll { padding-inline:16px; }
+  }
+  .ai-heading :is(h2,p), .ai-panel h3 { margin:0; }
+  .ai-panel { background:var(--surface,var(--card)); border:1px solid var(--border); border-radius:14px; margin-top:10px; padding:13px 16px; }
+  .ai-panel p { margin:8px 0; line-height:1.6; }
+  .ai-panel > :is(h3,summary) { font-size:15px; color:var(--ink); }
+  .ai-panel .muted { font-size:13px; }
+  #aiResultCard { border-color:rgba(209,175,115,.3); }
+  .ai-panel p:empty, .ai-panel ul:empty { display:none; }
+  .ai-panel summary { cursor:pointer; font-weight:650; }
+  #aiPathLabel { display:grid; gap:5px; margin-block:10px; }
+  .ai-share { display:flex; gap:8px; align-items:flex-start; margin-top:8px; }
+  .ai-share input { accent-color:var(--gold); }
+  .ai-analysis { white-space:pre-wrap; overflow-wrap:anywhere; padding:8px 0; }
+  #codexDesktopLink { text-decoration:none; }
 </style>
 <script>
 try {
@@ -540,16 +579,22 @@ try {
 } catch {}
 </script></head>
 <body><main class="page">
-<header class="top"><div><span class="eyebrow">投资账本 · 线上版</span><h1>投资全景</h1><time id="headerToday" class="datepill"></time> </div><div class="actions"><button id="privacyToggle" type="button" class="btn" aria-controls="ledgerData" aria-pressed="false" hidden>隐藏数据</button><button data-private-control id="refreshMarketTop" type="button" class="btn dark">一键刷新</button><span data-private-control id="topRefreshStatus" class="muted" role="status" hidden></span><button data-private-control class="btn" onclick="window.print()">打印 / 保存 PDF</button><button data-private-control class="btn dark" id="exportCsv">导出持仓 CSV</button></div></header>
+<header class="top"><div><span class="eyebrow">投资账本 · 线上版</span><h1>投资全景</h1><time id="headerToday" class="datepill"></time> </div><div class="actions"><button id="openCodexHandoff" class="btn" type="button">账本 AI 助手</button><button id="privacyToggle" type="button" class="btn" aria-controls="ledgerData" aria-pressed="false" hidden>隐藏数据</button><button data-private-control id="refreshMarketTop" type="button" class="btn dark">一键刷新</button><span data-private-control id="topRefreshStatus" class="muted" role="status" hidden></span><button data-private-control class="btn" onclick="window.print()">打印 / 保存 PDF</button><button data-private-control class="btn dark" id="exportCsv">导出持仓 CSV</button></div></header>
 <p id="privacyNotice" role="status" hidden>投资数据已隐藏</p>
 <div id="ledgerData">
 <nav class="tabs"><a href="#overview">账户总览</a><a href="#accounts">账户核对</a><a href="#details">持仓明细</a><a href="#risk">组合风险</a><a href="#weekly-risk">周风险分析</a><a href="#discipline">投资纪律</a><a href="#reviews">持仓记录</a><a href="#method">统计说明</a></nav>
 <aside class="card card-pad" aria-labelledby="investmentReminderTitle" style="margin-block:10px 14px;padding-block:16px">
-  <h2 id="investmentReminderTitle" class="mini-label" style="margin:0 0 12px">投资提醒</h2>
-  <blockquote style="margin:0;line-height:1.75">
+  <div class="reminder-heading"><h2 id="investmentReminderTitle" class="mini-label">投资提醒</h2><button id="editReminder" type="button" class="filter-btn" aria-controls="reminderEditor" aria-expanded="false">编辑</button></div>
+  <blockquote id="investmentReminderText" style="margin:0;line-height:1.75">
     <p style="margin:0 0 8px">“如果现在手里是现金，这支票还愿意买入吗？若不愿意，就别因亏损和不甘心而继续持有。”</p>
     <p style="margin:0">“决定退出，就坚决执行，不留底仓、不贪高点。宁可卖飞少赚，不让犹豫变亏损。”</p>
   </blockquote>
+  <form id="reminderEditor" class="v2-fields" hidden>
+    <label>第一条提醒<textarea name="first" rows="3" maxlength="300" required></textarea></label>
+    <label>第二条提醒<textarea name="second" rows="3" maxlength="300" required></textarea></label>
+    <div class="controls"><button type="submit" class="btn dark">保存</button><button type="button" id="cancelReminder" class="btn">取消</button></div>
+  </form>
+  <small id="reminderStatus" class="muted" role="status"></small>
 </aside>
 <section id="overview" aria-label="账户总览">
   <div class="card main-card card-pad overview-lead">
@@ -710,7 +755,7 @@ try {
   <div class="header-row">
     <div><h2 class="section-title">持仓记录</h2><p class="section-subtitle">展开资产即可添加或查看记录。</p></div>
     <div class="controls v2-tools">
-      <label>资产分类 <select id="reviewFilter"><option value="all">全部</option><option value="stocks">股票</option><option value="funds">非黄金基金</option><option value="gold">黄金</option><option value="cash">现金</option></select></label>
+      <label>资产分类 <span class="holding-view-select review-category-select"><select id="reviewFilter"><option value="all">全部</option><option value="stocks">股票</option><option value="funds">非黄金基金</option><option value="gold">黄金</option><option value="cash">现金</option></select></span></label>
 
     </div>
   </div>
@@ -1902,7 +1947,7 @@ function onlineRow(asset) {
   const dateOk=value=>typeof value==='string' && /^\d{4}-\d{2}-\d{2}$/.test(value);
   const accountName=group=>group==='stocks'?'证券账户':group==='gold_acc'?'积存金账户':'基金账户';
   const codePattern=group=>group==='stocks'?/^(sh|sz)\d{6}$/:group==='gold_acc'?/^Au99\.99$/:/^\d{6}$/;
-  const defaults=()=>({holdings:[],cash:0,cashDate:'',trades:[],capital:null,endpoint:''});
+  const defaults=()=>({holdings:[],cash:0,cashDate:'',trades:[],capital:null,endpoint:'',aiReceipts:[]});
   function endpoint(value) {
     if (!value) return '';
     const url=new URL(value);
@@ -1937,7 +1982,8 @@ function onlineRow(asset) {
           (group==='stocks' && ![cashChange,cashAfter].every(Number.isFinite))) throw Error('成交记录格式无效。');
       return {name,group,date,side,shares,price,fees,gross,net,cashChange,cashAfter};
     });
-    return {holdings:clean,cash,cashDate:dateOk(cashDate)?cashDate:'',trades:cleanedTrades,capital,endpoint:endpoint(value.endpoint)};
+    return {holdings:clean,cash,cashDate:dateOk(cashDate)?cashDate:'',trades:cleanedTrades,capital,endpoint:endpoint(value.endpoint),
+      aiReceipts:Array.isArray(value.aiReceipts) ? value.aiReceipts.filter(id=>typeof id==='string' && /^[a-f0-9-]{36}$/i.test(id)).slice(-200) : []};
   }
   let book=defaults();
   let storageReadable=true;
@@ -2182,8 +2228,22 @@ function onlineRow(asset) {
     }
   }
   window.onlinePortfolio={
+    hasAppliedAI:id=>book.aiReceipts.includes(id),
+    commitChanges(expected,next,requestId) {
+      if (holdingDialog.open || topButton.disabled || byId('assetsTable').querySelector('.holding-editor')) {
+        throw Error('请先结束持仓编辑或等待行情刷新完成。');
+      }
+      const stored=localStorage.getItem(key);
+      const current=stored ? validatePortfolio(JSON.parse(stored)) : book;
+      if (JSON.stringify(current)!==JSON.stringify(book) || JSON.stringify(window.onlinePortfolio.export())!==expected) {
+        throw Error('账本已变化，请重新生成预览。若在其他标签页修改过，请先刷新页面。');
+      }
+      if (book.aiReceipts.includes(requestId)) throw Error('此任务已入账。');
+      persist({...next,endpoint:book.endpoint,aiReceipts:[...book.aiReceipts,requestId]});
+      syncHoldings(true);
+    },
     hasData:()=>Boolean(book.holdings.length || book.cash || book.trades.length),
-    export:()=>({holdings:book.holdings,cash:book.cash,cashDate:book.cashDate,capital:book.capital,trades:book.trades,endpoint:''}),
+    export:()=>({holdings:book.holdings,cash:book.cash,cashDate:book.cashDate,capital:book.capital,trades:book.trades,endpoint:'',aiReceipts:book.aiReceipts}),
     validate:validatePortfolio,
     restore(value) { persist({...value,endpoint:book.endpoint},true); fillConfig(); syncHoldings(); }
   };
@@ -2379,6 +2439,446 @@ function onlineRow(asset) {
     }
   });
   try { if (saved && sessionStorage.getItem(key)==='locked') lock(); } catch {}
+})();
+</script>
+<script>
+(() => {
+  const key='investment-panorama-online-reminders-v1';
+  const button=document.getElementById('editReminder');
+  const form=document.getElementById('reminderEditor');
+  const block=document.getElementById('investmentReminderText');
+  const status=document.getElementById('reminderStatus');
+  const fields=[form.elements.first,form.elements.second];
+  const lines=[...block.querySelectorAll('p')];
+  const valid=values=>Array.isArray(values) && values.length===2 &&
+    values.every(value=>typeof value==='string' && value.trim() && value.length<=300);
+  let reminders=lines.map(line=>line.textContent);
+  try {
+    const saved=JSON.parse(localStorage.getItem(key));
+    if(valid(saved)) reminders=saved;
+  } catch {}
+  function render() { reminders.forEach((text,index)=>{ lines[index].textContent=text; }); }
+  function edit(active) {
+    form.hidden=!active;
+    block.hidden=active;
+    button.hidden=active;
+    button.setAttribute('aria-expanded',String(active));
+    if(active) {
+      fields.forEach((field,index)=>{ field.value=reminders[index]; });
+      fields[0].focus();
+    } else button.focus({preventScroll:true});
+  }
+  button.onclick=()=>{ status.textContent=''; edit(true); };
+  document.getElementById('cancelReminder').onclick=()=>edit(false);
+  form.onsubmit=event=>{
+    event.preventDefault();
+    const values=fields.map(field=>field.value.trim());
+    if(!valid(values)) { status.textContent='请填写两条投资提醒。'; return; }
+    try {
+      localStorage.setItem(key,JSON.stringify(values));
+      reminders=values;
+      render();
+      edit(false);
+      status.textContent='已保存到当前浏览器。';
+    } catch { status.textContent='当前浏览器无法保存，请重试。'; }
+  };
+  render();
+})();
+</script>
+<dialog id="codexHandoffDialog" class="card card-pad" aria-labelledby="codexHandoffTitle">
+  <header class="ai-heading"><div><h2 id="codexHandoffTitle">账本 AI 助手</h2><p class="muted">在 Codex 处理数据，在这里核对和查看。</p></div><button id="closeCodexHandoff" type="button" class="btn" aria-label="关闭">×</button></header>
+  <div class="ai-scroll">
+  <details id="aiProjectSetup" class="ai-panel" open>
+    <summary>本地项目 <small id="aiProjectBadge" class="muted"></small></summary>
+    <p id="aiProjectStatus" class="muted" role="status">正在读取连接…</p>
+    <p class="muted"><strong>保存在哪里：</strong>新建时，在你选的存放位置下创建「投资全景项目」文件夹。添加已有项目时，使用你选中的文件夹。</p>
+    <p class="muted"><strong>里面存什么：</strong>数据格式说明、连接验证文件、任务清单和 Codex 返回的分析或变更结果。勾选快照后，还会保存本次任务的持仓、现金和累计投入。</p>
+    <p class="muted">正式账本和历史记录保存在当前浏览器。请把本地项目和 GitHub 发布目录分开存放。</p>
+    <div class="controls">
+      <button id="createAIProject" type="button" class="btn">新建项目</button>
+      <button id="connectAIProject" type="button" class="btn">添加已有项目</button>
+      <button id="authorizeAIProject" type="button" class="btn" hidden>恢复文件夹授权</button>
+    </div>
+    <label id="aiPathLabel">本地项目完整路径<input id="aiProjectPath" maxlength="600" placeholder="/Users/你的用户名/投资全景项目" autocomplete="off"></label>
+    <button id="verifyAIProject" type="button" class="btn" hidden>准备目录验证</button>
+  </details>
+  <section class="ai-panel" aria-labelledby="aiTaskTitle">
+    <h3 id="aiTaskTitle">交给 Codex</h3>
+    <label class="ai-share"><input id="aiShareSnapshot" type="checkbox" disabled><span>同时将当前持仓、现金和投入写入所选本地项目</span></label>
+    <p class="muted">分析现有账本或更新持仓时可勾选。快照保留在该本机目录，请选择自己控制的文件夹。</p>
+    <div class="controls">
+      <button id="launchDesktopCodex" type="button" class="btn dark" disabled>准备新任务</button>
+      <a id="codexDesktopLink" class="btn" hidden>打开桌面 Codex</a>
+    </div>
+    <p id="codexHandoffStatus" role="status"></p>
+  </section>
+  <section id="aiResultCard" class="ai-panel" aria-labelledby="aiResultTitle" hidden>
+    <h3 id="aiResultTitle">Codex 返回结果</h3>
+    <div id="codexTaskPreview" class="ai-analysis" hidden></div>
+    <ul id="codexChangeList" class="v2-notes"></ul>
+    <button id="applyCodexChanges" type="button" class="btn dark" hidden>确认写入本地账本</button>
+  </section>
+  </div>
+</dialog>
+<script>
+(() => {
+  const byId=id=>document.getElementById(id);
+  const dialog=byId('codexHandoffDialog');
+  const launcher=byId('launchDesktopCodex');
+  const link=byId('codexDesktopLink');
+  const pathField=byId('aiProjectPath');
+  const projectStatus=byId('aiProjectStatus');
+  const status=byId('codexHandoffStatus');
+  const notify=byId('openCodexHandoff');
+  const share=byId('aiShareSnapshot');
+  const preview=byId('codexTaskPreview');
+  const list=byId('codexChangeList');
+  const apply=byId('applyCodexChanges');
+  const resultCard=byId('aiResultCard');
+  const guideName='账本数据格式.md';
+  const projectGuide=[
+    '# 投资全景账本项目 · 数据格式 v2',
+    '任务编号从 Codex 开始任务时提供，并与本次 portfolio-request-任务编号.json 一致。若该文件带有 snapshotFile，先读取对应账本快照。',
+    '将结果保存到 portfolio-result-任务编号.json。编码为 UTF-8，任务编号原样填写。可同时返回 analysis 和 changes，也可只返回其一。',
+    '{"version":2,"requestId":"任务编号","analysis":"分析正文","changes":{"add":[{"name":"示例股票","group":"stocks","code":"sh600000","qty":100,"price":10,"basis":1000}],"update":[{"name":"现有持仓名称","price":10.5}],"cash":1000,"capital":5000}}',
+    'changes 中只填写有依据的字段。不需要的字段省略。add 资产名须唯一，update 按现有完整名称匹配，允许变更 qty、price、basis。',
+    'group：stocks 股票，other_fund 普通基金，gold_etf 黄金联接基金，gold_acc 积存金。股票代码为 sh/sz 加六位数字，基金为六位数字，积存金为 Au99.99。',
+    'qty 分别用股、份或克，price 为人民币单价，basis 是整笔持仓总成本（元）。cash 为证券可用现金，capital 为证券累计投入。实际成交在账本里登记。',
+    '数据不足时向用户确认。网页负责验证、预览与入账。'
+  ].join('\n\n');
+  const dbName='investment-panorama-project-connection-v2';
+  const taskKey='investment-panorama-ai-task-v2';
+  let connection=null;
+  let permitted=false;
+  let working=false;
+  let reading=false;
+  let pending=null;
+  let resultText='';
+  let seen='';
+  let dbPromise;
+  function database() {
+    if (!dbPromise) dbPromise=new Promise((resolve,reject)=>{
+      const request=indexedDB.open(dbName,1);
+      request.onupgradeneeded=()=>request.result.createObjectStore('settings');
+      request.onsuccess=()=>resolve(request.result);
+      request.onerror=()=>reject(request.error);
+    });
+    return dbPromise;
+  }
+  async function loadConnection() {
+    const db=await database();
+    return new Promise((resolve,reject)=>{
+      const request=db.transaction('settings').objectStore('settings').get('connection');
+      request.onsuccess=()=>resolve(request.result ?? null);
+      request.onerror=()=>reject(request.error);
+    });
+  }
+  async function saveConnection() {
+    const db=await database();
+    return new Promise((resolve,reject)=>{
+      const tx=db.transaction('settings','readwrite');
+      tx.objectStore('settings').put(connection,'connection');
+      tx.oncomplete=resolve;
+      tx.onabort=tx.onerror=()=>reject(tx.error);
+    });
+  }
+  function storedTask() {
+    try {
+      const task=JSON.parse(localStorage.getItem(taskKey));
+      return task?.projectId===connection?.id ? task : null;
+    } catch { return null; }
+  }
+  async function writeFile(folder,name,content) {
+    const file=await folder.getFileHandle(name,{create:true});
+    const writer=await file.createWritable();
+    try { await writer.write(content); await writer.close(); }
+    catch(error) { await writer.abort().catch(()=>{}); throw error; }
+  }
+  async function readJSON(folder,name,limit=200000) {
+    const file=await (await folder.getFileHandle(name)).getFile();
+    if (file.size>limit) throw Error('结果文件过大。');
+    const text=await file.text();
+    return {text,value:JSON.parse(text)};
+  }
+  async function ensureGuide(folder) {
+    try { await folder.getFileHandle(guideName); }
+    catch(error) {
+      if (error.name!=='NotFoundError') throw error;
+      await writeFile(folder,guideName,projectGuide);
+    }
+  }
+  function renderProject() {
+    const verified=Boolean(connection?.verified && permitted);
+    byId('aiProjectSetup').open=!verified;
+    byId('aiProjectBadge').textContent=verified?' · '+connection.folder.name:'';
+    pathField.value=connection?.path ?? '';
+    pathField.hidden=verified;
+    byId('aiPathLabel').hidden=verified;
+    byId('authorizeAIProject').hidden=!connection || permitted;
+    byId('verifyAIProject').hidden=!connection || !permitted || verified;
+    launcher.disabled=!verified;
+    share.disabled=!verified;
+    projectStatus.textContent=!connection?'尚未连接项目':!permitted?'已记住「'+connection.folder.name+'」，请恢复文件夹授权。':
+      !verified?'已选择「'+connection.folder.name+'」，请在 Codex 验证目录。':'已连接 · '+connection.path;
+  }
+  function resetResult() {
+    pending=null;
+    seen='';
+    resultText='';
+    list.replaceChildren();
+    apply.hidden=true;
+    preview.hidden=true;
+    preview.textContent='';
+    resultCard.hidden=true;
+    notify.textContent='账本 AI 助手';
+  }
+  function showDesktop(path,prompt,label) {
+    const href='codex://threads/new?'+new URLSearchParams({path,prompt});
+    link.href=href;
+    link.textContent=label;
+    link.hidden=false;
+    link.focus();
+  }
+  async function selectProject(create) {
+    if (working) return;
+    if (!window.showDirectoryPicker) {
+      projectStatus.textContent='当前浏览器不支持文件夹连接，请用桌面 Chrome 或 Edge 打开此页面。';
+      return;
+    }
+    working=true;
+    try {
+      let folder=await window.showDirectoryPicker({mode:'readwrite'});
+      if (create) {
+        const base='投资全景项目';
+        let name=base;
+        for (let i=2;;i++) {
+          try { await folder.getDirectoryHandle(name); name=base+' '+i; }
+          catch(error) { if(error.name!=='NotFoundError') throw error; break; }
+        }
+        folder=await folder.getDirectoryHandle(name,{create:true});
+      }
+      await ensureGuide(folder);
+      connection={folder,id:crypto.randomUUID(),path:'',verified:false};
+      permitted=true;
+      resetResult();
+      link.hidden=true;
+      renderProject();
+      pathField.focus();
+      try { await saveConnection(); }
+      catch { projectStatus.textContent+=' 当前浏览器无法记住连接。'; }
+    } catch(error) {
+      if (error.name!=='AbortError') projectStatus.textContent='无法连接该文件夹，请选择可读写的目录。';
+    } finally { working=false; }
+  }
+  byId('createAIProject').onclick=()=>selectProject(true);
+  byId('connectAIProject').onclick=()=>selectProject(false);
+  byId('authorizeAIProject').onclick=async()=>{
+    try {
+      permitted=await connection.folder.requestPermission({mode:'readwrite'})==='granted';
+      renderProject();
+      if (permitted) checkProject();
+    } catch { projectStatus.textContent='无法恢复授权，请重新添加项目。'; }
+  };
+  byId('verifyAIProject').onclick=async()=>{
+    if (working || !connection || !permitted) return;
+    const path=pathField.value.trim();
+    if (!/^(?:\/|[A-Za-z]:[\\/])/.test(path) || /[\r\n]/.test(path) ||
+        path.replace(/[\\/]+$/,'').split(/[\\/]/).at(-1)!==connection.folder.name) {
+      projectStatus.textContent='请输入所选项目的完整路径。';
+      return;
+    }
+    working=true;
+    try {
+      const id=crypto.randomUUID();
+      const request='portfolio-connect-'+id+'.json';
+      const reply='portfolio-connected-'+id+'.json';
+      await writeFile(connection.folder,request,JSON.stringify({version:2,id}));
+      connection={...connection,path,challenge:{id,reply}};
+      try { await saveConnection(); } catch {}
+      showDesktop(path,'请先读取当前工作区内的 '+request+'。若找到且 id 为 '+id+'，在同一目录写入 '+reply+
+        '，内容为 '+JSON.stringify({version:2,id})+'。这是目录连接验证。如果找不到请求文件，请提示我检查路径。','在 Codex 验证目录');
+      projectStatus.textContent='验证任务已准备。点击下方链接，在 Codex 中确认发送。';
+    } catch(error) { projectStatus.textContent='无法准备验证：'+error.message; }
+    finally { working=false; }
+  };
+  launcher.onclick=async()=>{
+    if (working || !connection?.verified || !permitted) return;
+    const old=storedTask();
+    if (old && old.id!==seen && !window.onlinePortfolio.hasAppliedAI(old.id) &&
+        !confirm('上次任务仍在等待结果。要开始新的任务吗？')) return;
+    if (pending && !confirm('当前有未入账的变更。要开始新的任务吗？')) return;
+    working=true;
+    launcher.disabled=true;
+    try {
+      const id=crypto.randomUUID();
+      const snapshotFile=share.checked?'portfolio-snapshot-'+id+'.json':null;
+      const book=window.onlinePortfolio.export();
+      if (snapshotFile) {
+        const holdings=book.holdings.map(asset=>({
+          name:asset.name,group:asset.group,code:asset.code,qty:asset.qty,basis:asset.basis,
+          price:asset.quote?.price ?? asset.price,date:asset.quote?.date ?? asset.date
+        }));
+        await writeFile(connection.folder,snapshotFile,JSON.stringify({
+          version:2,requestId:id,capturedAt:new Date().toISOString(),holdings,cash:book.cash,capital:book.capital
+        },null,2));
+      }
+      const request={version:2,requestId:id,snapshotFile,resultFile:'portfolio-result-'+id+'.json'};
+      const requestFile='portfolio-request-'+id+'.json';
+      await writeFile(connection.folder,requestFile,JSON.stringify(request,null,2));
+      localStorage.setItem(taskKey,JSON.stringify({id,projectId:connection.id}));
+      resetResult();
+      const instruction='请先读取当前目录的 '+requestFile+' 和「账本数据格式.md」。'+
+        (snapshotFile?'用户已准备本次本地账本快照，请使用请求中指定的文件。':'本次未提供账本快照，需要时请向用户确认。')+
+        '按我在对话里提出的需求操作。请把结果保存到 '+request.resultFile+'，输出 UTF-8 JSON：'+
+        '{"version":2,"requestId":"'+id+'","analysis":"可选分析正文","changes":{"add":[],"update":[]}}。'+
+        'analysis 或 changes 可省略。add 项含 name、group、code、qty、price、basis；update 按名称匹配，可填写 qty、price、basis。'+
+        '现金和累计投入分别为 changes.cash 和 changes.capital。数据不足先确认。';
+      showDesktop(connection.path,instruction,'打开桌面 Codex');
+      status.textContent=snapshotFile?'任务已准备。快照仅写入所选本地文件夹。':'任务已准备。';
+    } catch(error) { status.textContent='无法准备任务：'+error.message; }
+    finally { working=false; launcher.disabled=false; }
+  };
+  async function checkProject() {
+    if (!connection || !permitted || reading || working || document.hidden) return;
+    reading=true;
+    const selected=connection;
+    try {
+      if (!selected.verified && selected.challenge) {
+        const {value}=await readJSON(selected.folder,selected.challenge.reply);
+        if (connection!==selected || value?.version!==2 || value.id!==selected.challenge.id) return;
+        connection={...selected,verified:true,challenge:null};
+        renderProject();
+        link.hidden=true;
+        try { await saveConnection(); }
+        catch { projectStatus.textContent+=' 当前浏览器无法记住连接。'; }
+        return;
+      }
+      if (!selected.verified) return;
+      const task=storedTask();
+      if (!task || !/^[a-f0-9-]{36}$/i.test(task.id)) return;
+      const {value,text}=await readJSON(selected.folder,'portfolio-result-'+task.id+'.json');
+      if (connection!==selected || storedTask()?.id!==task.id) return;
+      if (value?.version!==2 || value.requestId!==task.id ||
+          (!value.changes && !(typeof value.analysis==='string' && value.analysis.trim()))) {
+        status.textContent='结果格式或任务编号不匹配，请在 Codex 修正。';
+        return;
+      }
+      if (seen===task.id && resultText===text) return;
+      seen=task.id;
+      resultText=text;
+      pending=null;
+      apply.hidden=true;
+      list.replaceChildren();
+      preview.hidden=true;
+      preview.textContent='';
+      resultCard.hidden=false;
+      if (typeof value.analysis==='string' && value.analysis.trim()) {
+        preview.textContent=value.analysis;
+        preview.hidden=false;
+      }
+      if (value.changes && !(Object.keys(value.changes).length===0 && !preview.hidden) && !window.onlinePortfolio.hasAppliedAI(task.id)) {
+        previewChanges(value.changes,task.id);
+      } else status.textContent=window.onlinePortfolio.hasAppliedAI(task.id)?'此任务的变更已入账。':'已收到 Codex 分析。';
+      notify.textContent=pending?'账本 AI · 有变更待核对':'账本 AI · 查看结果';
+    } catch(error) {
+      if (error.name==='NotAllowedError' && connection===selected) {
+        permitted=false;
+        renderProject();
+      } else if (error.name!=='NotFoundError') status.textContent='暂无法读取 Codex 结果：'+error.message;
+    } finally { reading=false; }
+  }
+  byId('openCodexHandoff').onclick=()=>{
+    dialog.showModal();
+    checkProject();
+  };
+  byId('closeCodexHandoff').onclick=()=>dialog.close();
+  link.onclick=()=>{ status.textContent='请在桌面 Codex 核对并发送任务。返回页面后会自动检查结果。'; };
+  window.addEventListener('focus',checkProject);
+  document.addEventListener('visibilitychange',checkProject);
+  setInterval(checkProject,3500);
+  renderProject();
+  loadConnection().then(async saved=>{
+    if (!saved || connection || working) return;
+    connection=saved;
+    permitted=await saved.folder.queryPermission({mode:'readwrite'})==='granted';
+    renderProject();
+    checkProject();
+  }).catch(()=>{});
+  function previewChanges(patch,requestId) {
+    pending=null;
+    list.replaceChildren();
+    apply.hidden=true;
+    try {
+      if (!patch || typeof patch!=='object' || Array.isArray(patch)) throw Error('请输入 JSON 对象。');
+      const allowed=['add','update','cash','capital'];
+      if (Object.keys(patch).some(key=>!allowed.includes(key))) throw Error('变更字段与当前任务不符。');
+      const book=window.onlinePortfolio.export();
+      const expected=JSON.stringify(book);
+      const next=JSON.parse(expected);
+      const date=new Intl.DateTimeFormat('sv-SE',{timeZone:'Asia/Shanghai'}).format(new Date());
+      const changes=[];
+      const additions=patch.add===undefined?[]:patch.add;
+      const updates=patch.update===undefined?[]:patch.update;
+      if (!Array.isArray(additions) || !Array.isArray(updates) || additions.length+updates.length>100) {
+        throw Error('持仓变更应为数组，最多 100 项。');
+      }
+      const items=[...additions.map(item=>({item,adding:true})),...updates.map(item=>({item,adding:false}))];
+      const seen=new Set();
+      const unitLabels={qty:'数量',price:'参考价',basis:'总成本'};
+      for (const {item,adding} of items) {
+        if (!item || typeof item.name!=='string' || !item.name.trim() || seen.has(item.name)) throw Error('资产名称缺失或重复。');
+        seen.add(item.name);
+        const target=next.holdings.find(asset=>asset.name===item.name);
+        if (adding) {
+          if (target) throw Error('持仓已存在：'+item.name);
+          const {name,group,qty,price,basis}=item;
+          let code=typeof item.code==='string'?item.code.trim().toLowerCase():'';
+          if (group==='gold_acc') code='Au99.99';
+          next.holdings.push({name,group,code,qty,price,basis,date});
+          changes.push('新增 '+name+' · 数量 '+qty+' · 参考价 '+price+' · 总成本 '+basis);
+        } else {
+          if (!target) throw Error('找不到持仓：'+item.name);
+          for (const key of Object.keys(item).filter(key=>key!=='name')) {
+            if (!Object.hasOwn(unitLabels,key) || !Number.isFinite(item[key])) throw Error('持仓更新字段或数值无效。');
+            const previous=key==='price' ? target.quote?.price ?? target.price : target[key];
+            if (item[key]===previous) continue;
+            changes.push(item.name+' · '+unitLabels[key]+' '+previous+' → '+item[key]);
+            target[key]=item[key];
+            if (key==='price') target.quote=null;
+            target.date=date;
+          }
+        }
+      }
+      for (const key of ['cash','capital']) {
+        if (!Object.hasOwn(patch,key)) continue;
+        if (!Number.isFinite(patch[key])) throw Error('现金和累计投入必须填写明确金额。');
+        if (patch[key]===next[key]) continue;
+        changes.push((key==='cash'?'证券现金':'累计投入')+' '+(next[key] ?? '未填写')+' → '+patch[key]);
+        next[key]=patch[key];
+        if (key==='cash') next.cashDate=date;
+      }
+      if (!changes.length) throw Error('没有需要写入的变更。');
+      const validated=window.onlinePortfolio.validate(next);
+      for (const text of changes) {
+        const row=document.createElement('li');
+        row.textContent=text;
+        list.append(row);
+      }
+      pending={expected,next:validated,requestId};
+      apply.hidden=false;
+      status.textContent='请核对以上变更，确认后写入当前浏览器。';
+    } catch(error) { status.textContent='无法预览：'+error.message; }
+  }
+  apply.onclick=()=>{
+    if (!pending) return;
+    try {
+      window.onlinePortfolio.commitChanges(pending.expected,pending.next,pending.requestId);
+      pending=null;
+      apply.hidden=true;
+      notify.textContent='账本 AI · 查看结果';
+      status.textContent='变更已写入本地账本，持仓和当天快照已更新。';
+    } catch(error) { status.textContent=error.message; }
+  };
 })();
 </script>
 </body></html>
