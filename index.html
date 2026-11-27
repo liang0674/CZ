@@ -1,0 +1,2384 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head>
+<meta name="referrer" content="no-referrer">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline'; connect-src https:; base-uri 'none'; form-action 'none'; object-src 'none'"><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="color-scheme" content="light"><title>投资全景</title><style>
+:root {--ink:#182438;--muted:#738096;--border:#e5e9f0;--canvas:#f5f7fb;--card:#ffffff;--brand:#374ea8;--navy:#182644;--loss:#138b74;--profit:#cf5263;--gold:#c6a76e;--shadow:0 18px 55px rgba(21,37,71,.055)}
+* {box-sizing:border-box} html{scroll-behavior:smooth} body{margin:0;background:var(--canvas);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,'PingFang SC','Microsoft YaHei','Noto Sans SC',sans-serif;font-size:14px;line-height:1.6}button,input{font:inherit}button{cursor:pointer}a{color:inherit}
+.page{max-width:1300px;margin:0 auto;padding:34px 30px 65px}.eyebrow{font-size:11px;font-weight:700;letter-spacing:2px;color:#93a2c1;text-transform:uppercase}
+.top{display:flex;justify-content:space-between;align-items:flex-start;gap:25px;margin-bottom:22px}.top h1{font-size:32px;letter-spacing:-.8px;margin:6px 0 4px;font-weight:780}.top p{color:var(--muted);margin:0}.actions{display:flex;align-items:center;gap:8px;flex-wrap:wrap;justify-content:flex-end}.btn{background:#fff;border:1px solid var(--border);padding:10px 15px;border-radius:12px;color:#253454;transition:.2s}.btn:hover{border-color:#8fa0db;background:#fafdff}.btn.dark{background:var(--navy);border-color:var(--navy);color:#fff}.datepill{background:#e9edfa;color:#45568d;padding:6px 12px;border-radius:90px;font-size:12px;display:inline-block;margin-top:11px}
+nav.tabs{display:flex;gap:5px;border-bottom:1px solid #dfe5ef;margin-bottom:24px;overflow:auto}nav.tabs a{padding:12px 17px;text-decoration:none;font-weight:650;color:#72819c;white-space:nowrap;border-bottom:3px solid transparent}nav.tabs a:hover{color:#30449a}nav.tabs a:first-child{color:#30449a;border-color:#4055b6}
+.grid{display:grid;gap:16px}.hero{grid-template-columns:1.23fr .77fr}.card{background:var(--card);border:1px solid var(--border);border-radius:20px;box-shadow:var(--shadow);overflow:hidden}.card-pad{padding:25px 27px}.main-card{background:linear-gradient(135deg,#172642 0%,#253b6d 62%,#394d81 100%);color:#fff;border:none;min-height:238px;position:relative}.main-card:after{content:'';position:absolute;right:-85px;top:-125px;width:340px;height:340px;border-radius:50%;border:63px solid rgba(255,255,255,.045);pointer-events:none}.main-card .eyebrow{color:#b1c4ec}.big-num{font-size:44px;line-height:1.2;letter-spacing:-1.2px;font-weight:760;margin:15px 0 12px;font-variant-numeric:tabular-nums}.hero-chips{display:flex;gap:8px;flex-wrap:wrap;margin-top:24px}.hero-chip{background:rgba(255,255,255,.10);padding:8px 12px;border:1px solid rgba(255,255,255,.07);border-radius:9px;font-size:12px}.hero-chip strong{font-weight:700}.summary-side{display:flex;flex-direction:column;justify-content:center;gap:16px}.mini-label{color:var(--muted);font-size:12px;font-weight:650}.mini-number{font-size:29px;font-weight:760;line-height:1.25;letter-spacing:-.4px;font-variant-numeric:tabular-nums}.pnl-red{color:var(--loss)}.neg{color:var(--loss)!important}.pos{color:var(--profit)!important}.muted{color:var(--muted)!important}.summary-side .row{display:flex;justify-content:space-between;align-items:center;gap:15px}.summary-side .note{font-size:12px;color:#8a96aa}.separator{height:1px;background:var(--border)}
+.metrics{grid-template-columns:repeat(3,1fr);margin-top:16px}.metric{padding:19px 23px}.metric .mini-number{font-size:23px;margin:8px 0 4px}.metric .hint{font-size:12px;color:var(--muted)}
+.section-title{font-size:21px;font-weight:780;margin:0 0 14px;letter-spacing:-.3px}.section-subtitle{margin:-5px 0 17px;color:var(--muted);font-size:12px}.charts{grid-template-columns:.94fr 1.06fr;margin-top:30px}.chart-title{font-size:17px;font-weight:750;margin:0 0 5px}.chart-subtitle{font-size:12px;color:var(--muted);margin:0 0 16px}.chart-flex{display:flex;align-items:center;gap:29px}.donut{width:196px;height:196px;flex:none;border-radius:50%;background:conic-gradient(#354cb6 0.00000% 46.18747%,#c5a46f 46.18747% 59.97249%,#e0bd87 59.97249% 73.73767%,#7a82a1 73.73767% 83.06193%,#78baa0 83.06193% 100.00000%);position:relative;display:grid;place-items:center}.donut-center{position:absolute;width:126px;height:126px;border-radius:50%;background:white;display:flex;align-items:center;justify-content:center;flex-direction:column}.donut-center strong{font-size:18px}.donut-center span{color:var(--muted);font-size:11px}.legend{flex:1;min-width:0}.legendrow{display:flex;justify-content:space-between;gap:10px;padding:8px 0;border-bottom:1px dashed #e7eaf0;font-size:12px}.legendrow:last-child{border-bottom:none}.legend-name{white-space:nowrap}.legend-name i{display:inline-block;width:9px;height:9px;border-radius:3px;margin-right:7px}.legendrow small{color:var(--muted);margin-left:5px}.num{font-variant-numeric:tabular-nums;font-feature-settings:'tnum';white-space:nowrap;text-align:right}.loss-item{margin:17px 0 23px}.loss-line{display:flex;justify-content:space-between;gap:12px;align-items:center;font-size:12px}.loss-line .num strong{font-size:14px;color:#1e2940}.loss-line .num small{font-size:12px;color:var(--muted);margin-left:9px}.loss-track{height:10px;border-radius:50px;background:#f0f2f8;overflow:hidden;margin-top:10px}.loss-fill{height:100%;border-radius:50px}.fill-黄金{background:#c7a875}.fill-基金{background:#7c83a3}.fill-股票{background:#5165bb}
+.section{margin-top:31px;scroll-margin-top:22px}.header-row{display:flex;gap:15px;align-items:center;justify-content:space-between;margin-bottom:15px;flex-wrap:wrap}.account-summary{padding:0 0 5px}.table-wrap{width:100%;overflow-x:auto}.table{width:100%;border-collapse:collapse;font-size:13px}.table th{font-size:11px;letter-spacing:.2px;text-align:left;background:#f9fafd;color:#79859b;font-weight:700;white-space:nowrap;padding:15px 15px;border-bottom:1px solid var(--border)}.table th.num{text-align:right}.table td{padding:16px 15px;border-bottom:1px solid #edf0f6;vertical-align:middle}.table tbody tr:last-child td{border-bottom:none}.table tbody tr:hover{background:#fbfcff}.assetname{font-weight:720;font-size:13px;white-space:nowrap}.extra-xs{font-size:11px;margin-top:3px}.table tfoot td{background:#f7f9ff;font-weight:750}.account-summary .table td:first-child{min-width:290px}
+.controls{display:flex;align-items:center;gap:12px;flex-wrap:wrap}.filters{display:flex;gap:5px;flex-wrap:wrap}.filter-btn{background:white;border:1px solid #e4e8ef;color:#748097;border-radius:10px;padding:7px 12px;font-size:12px}.filter-btn.active{background:#253b6d;color:white;border-color:#253b6d}.search{border:1px solid var(--border);background:white;border-radius:10px;padding:8px 12px;width:205px;max-width:100%;outline:none}.search:focus{border-color:#889adb}.small-result{font-size:11px;color:var(--muted);padding-left:5px}.holding-table{min-width:1150px}.holding-table th,.holding-table td{padding:14px 12px}.holding-table td:first-child{min-width:200px}.tag{font-size:10px;padding:4px 8px;white-space:nowrap;border-radius:7px;background:#eff2f8;color:#4f5d77}.tag-stocks{background:#e9efff;color:#364fa6}.tag-gold{background:#fbf2dc;color:#97723a}.tag-funds{background:#f1eefb;color:#765d96}.tag-cash{background:#e5f5ef;color:#3d8a72}.source-label{display:block;font-size:11px;color:#465478}.cell-note{display:block;color:#8692a5;font-size:11px;margin-top:4px;line-height:1.5;min-width:175px}.tiny{font-size:11px}.callout{border:1px solid #e0e7f4;background:#f8faff;border-radius:13px;padding:14px 17px;font-size:12px;line-height:1.75;color:#4b5972;margin:14px 0}.callout strong{color:#293d75}.source-shot-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}.source-shot{margin:0;background:#f8faff;border:1px solid var(--border);border-radius:13px;padding:9px}.source-shot img{width:100%;height:345px;object-fit:contain;object-position:top center;border-radius:7px;display:block;cursor:zoom-in}.source-shot img.zoom{height:auto;max-height:none;cursor:zoom-out}.source-shot figcaption{font-size:11px;color:var(--muted);padding:8px 4px}.sources details{margin-top:12px;border-top:1px solid var(--border);padding-top:17px}.sources summary{font-weight:650;cursor:pointer;color:#445d9a}.rule-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px}.rule{border:1px solid var(--border);padding:16px 18px;border-radius:12px;background:#fff}.rule h4{margin:0 0 7px;font-size:13px}.rule p{margin:0;font-size:12px;color:#617087;line-height:1.8}.foot{display:flex;justify-content:space-between;align-items:center;gap:20px;margin-top:32px;color:#8794a8;font-size:11px}.footer-badge{display:inline-flex;background:#e8ecf7;color:#43568a;border-radius:7px;padding:5px 10px}.no-results{display:none;text-align:center;color:#8a96aa;padding:32px}.capture{font-size:11px;color:#96a1b5;margin-top:12px}
+@media(max-width:980px){.page{padding:22px 15px 36px}.hero,.charts{grid-template-columns:1fr}.metrics{grid-template-columns:repeat(2,1fr)}.source-shot-grid{grid-template-columns:repeat(2,1fr)}.top{flex-wrap:wrap}.chart-flex{justify-content:center}.rule-grid{grid-template-columns:1fr}}
+@media(max-width:560px){.top h1{font-size:26px}.big-num{font-size:35px}.metrics{grid-template-columns:1fr}.chart-flex{flex-direction:column;align-items:stretch}.donut{margin:0 auto}.mini-number{font-size:24px}.source-shot-grid{grid-template-columns:1fr}.actions{justify-content:flex-start}.search{width:100%}.card-pad{padding:20px}.header-row{align-items:flex-start}}
+@media print{@page{size:A4 landscape;margin:12mm}body{background:white;font-size:11px}.page{max-width:none;padding:0}.actions,nav.tabs,.filters,.search,#export-hint{display:none!important}.card{box-shadow:none;border-color:#d5dbe5;break-inside:avoid}.hero,.charts{grid-template-columns:1fr 1fr}.chart-flex{gap:12px}.donut{width:145px;height:145px}.donut-center{width:98px;height:98px}.source-shot-grid{grid-template-columns:repeat(4,1fr)}.source-shot img{height:200px}.section{margin-top:21px}.table td{padding:8px 8px}.table th{padding:9px 8px}.holding-table{min-width:0;font-size:9px}.holding-table th,.holding-table td{padding:8px 5px}.holding-table td:first-child{min-width:0}.cell-note{min-width:0}.foot{margin-top:12px}#assetsTable tr{display:table-row!important}.sources details:not([open]) .source-shot-grid{display:none} }
+
+/* Screen dashboard. Print keeps the compact ledger layout. */
+@media screen {
+  :root {
+    color-scheme: dark;
+    --canvas: #080808;
+    --card: #10100f;
+    --surface: #171715;
+    --raised: #272524;
+    --ink: #f3f0ec;
+    --muted: #bcb9b2;
+    --border: #323130;
+    --gold: #e0c38e;
+    --gold-soft: #241e16;
+    --loss: #80d9b6;
+    --profit: #ff919d;
+    --shadow: none;
+    --numbers: ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
+  }
+
+  body {
+    font-size: 14px;
+    line-height: 1.6;
+    background: radial-gradient(ellipse 70% 440px at 12% -90px, #191819 0%, transparent 90%), var(--canvas);
+  }
+  .page { max-width: 1680px; padding: 43px clamp(20px, 3.9vw, 66px) 58px; }
+  .top { align-items: end; margin-bottom: 24px; gap: 20px; }
+  .top h1 { margin: 9px 0 10px; font-size: clamp(30px, 3.65vw, 50px); line-height: 1.12; letter-spacing: -.045em; }
+  .eyebrow { color: var(--gold); letter-spacing: .14em; }
+  .datepill { margin: 0; padding: 0; background: none; color: var(--muted); font-size: 12px; }
+  .datepill::before {
+    display: inline-block; content: ''; width: 6px; height: 6px; border-radius: 50%; background: var(--gold);
+    margin: 0 8px 2px 0;
+  }
+  .actions { gap: 8px; }
+  #topRefreshStatus { flex-basis: 100%; order: 5; }
+  #topRefreshStatus[hidden] { display: none; }
+  .btn, .filter-btn, .search {
+    background: var(--surface); border-color: transparent; color: var(--ink); border-radius: 8px;
+  }
+  .btn { padding: 9px 14px; min-height: 42px; font-size: 13px; font-weight: 650; }
+  .btn:hover, .filter-btn:hover { background: var(--raised); border-color: #686050; }
+  .btn.dark { background: var(--gold); border-color: var(--gold); color: #21180c; }
+  .btn.dark:hover { background: #f1d296; }
+  .btn:disabled { opacity: .66; cursor: wait; }
+  .actions .btn:not(#refreshMarketTop) { color: var(--muted); background: var(--surface); border-color: transparent; }
+  :is(a, button, input, summary, select):focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
+  .search:focus { border-color: var(--gold); }
+  nav.tabs {
+    gap: 5px; margin-bottom: 28px; border-color: transparent;
+    scrollbar-width: thin; padding: 1px 1px 0;
+  }
+  nav.tabs a {
+    padding: 13px 15px 11px; color: var(--muted); border-bottom-width: 2px;
+    transition: color .15s, background .15s;
+  }
+  nav.tabs a:first-child { color: var(--gold); border-color: var(--gold); }
+  nav.tabs a:hover { color: var(--ink); background: var(--surface); }
+  .section { margin-top: 48px; scroll-margin-top: 30px; }
+  .section-title { font-size: clamp(22px, 2.1vw, 28px); margin-bottom: 9px; line-height: 1.25; letter-spacing: -.025em; }
+  .section-subtitle { margin: 0 0 16px; font-size: 13px; }
+  .header-row { margin-bottom: 16px; }
+  .header-row .section-subtitle { margin-bottom: 0; }
+
+  .grid { gap: 14px; }
+  .card { border: 0; border-radius: 13px; }
+  .card-pad { padding: clamp(30px, 3.4vw, 48px) clamp(24px, 3vw, 44px); }
+  .main-card {
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+    background: radial-gradient(ellipse at 92% 6%, #35291a 0%, transparent 60%), #171513;
+    color: var(--ink);
+  }
+  .main-card::after { display: none; }
+  .main-card .eyebrow { color: var(--gold); font-size: 11px; }
+  .big-num {
+    font-size: clamp(40px, 5.2vw, 82px); font-weight: 740; letter-spacing: -.065em; margin: 11px 0 7px;
+    font-variant-numeric: tabular-nums; white-space: nowrap; line-height: 1.08;
+  }
+  #portfolioPricingNote { color: #bdb5a6; font-size: 12px; overflow-wrap: anywhere; }
+  .mini-label { font-size: 12px; color: var(--muted); }
+  .mini-number { font-weight: 730; letter-spacing: -.035em; margin-top: 5px; }
+  .capture, .foot, .no-results { color: var(--muted); }
+  .metrics { margin-top: 14px; grid-template-columns: repeat(3,minmax(0,1fr)); }
+  .metric { padding: 28px 29px; }
+  .metric .mini-number { font-size: clamp(22px, 2.25vw, 32px); margin: 11px 0 8px; }
+  .metric .hint { font-size: 12px; min-height: 1.6em; }
+  .metric .hint strong { font-variant-numeric: tabular-nums; font-weight: 750; margin-left: 4px; }
+
+  .charts { margin-top: 14px; grid-template-columns: minmax(0,1.12fr) minmax(0,1fr); }
+  .chart-title { font-size: 17px; margin-bottom: 3px; }
+  .chart-subtitle { margin-bottom: 25px; }
+  .chart-flex { gap: clamp(16px, 2.7vw, 36px); }
+  .donut { width: clamp(136px, 14vw, 194px); aspect-ratio: 1; height: auto;  }
+  .donut-center { width: 80%; height: 80%; background: var(--card);  }
+  .donut-center strong { font-size: clamp(17px,1.9vw,23px); font-variant-numeric: tabular-nums; }
+  .legendrow { font-size: 12px; border-bottom: 0; gap: 8px; padding: 11px 0; align-items: center; }
+  .legendrow .num { font-size: 12px; }
+  .legend-name i { width: 8px; height: 8px; margin-right: 6px; }
+  .legendrow small { display: inline-block; min-width: 43px; text-align: right; }
+  .capture { margin: 16px 0 0; }
+  .loss-item { margin: 13px 0 20px; }
+  .loss-line { gap: 8px; }
+  .loss-line .num strong { color: var(--loss); }
+  .loss-line .num small { margin-left: 6px; }
+  .loss-track { height: 6px; margin-top: 6px; background: var(--raised); }
+  .callout { color: var(--muted); background: transparent; border: 0; padding: 0; margin: 14px 0 0; }
+  .callout strong, .sources summary { color: var(--gold); }
+
+  .table-wrap { scrollbar-color: #4d505a var(--card); }
+  .table th { background: var(--surface); color: #dedbd4; font-size: 12px; }
+  .table th, .table td { padding: 16px 18px; border-bottom: 0; }
+  .table:not(.holding-table) tbody tr:nth-child(even) { background-color: #ffffff02; }
+  .table tbody tr:hover { background-color: var(--surface); }
+  .table tfoot td { background: var(--gold-soft); font-weight: 750; }
+  .table .num, .legendrow .num, .loss-line .num { font-variant-numeric: tabular-nums; }
+  .account-summary .table td:first-child { min-width: 235px; }
+  .assetname { color: var(--ink); font-size: 13px; }
+  .extra-xs { margin-top: 2px; }
+  .tag { background: var(--raised); color: #e2e4ea; }
+  .tag-stocks { background: #212b40; color: #bacbff; }
+  .tag-gold { background: #30261a; color: #efd09a; }
+  .tag-funds { background: #2e253b; color: #e0c4fa; }
+  .tag-cash { background: #1c3027; color: #a3ddc6; }
+  .source-label { color: #c8c6c2; }
+  .cell-note, .rule p { color: var(--muted); }
+  .holdings-toolbar {
+    background: var(--card); border-radius: 12px;
+    padding: 16px 18px; margin: 0 0 12px; display: grid; gap: 10px;
+  }
+  .holdings-toolbar-row { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 9px 15px; }
+  .holdings-toolbar .filters { gap: 4px; flex-wrap: wrap; padding: 3px; background: var(--canvas); border-radius: 8px; }
+  .holdings-toolbar .filter-btn[data-filter] {
+    min-height: 34px; padding: 6px 11px; border-color: transparent; background: transparent; color: var(--muted);
+  }
+  .holdings-toolbar .filter-btn[data-filter]:hover { color: var(--ink); background: var(--surface); }
+  .holdings-toolbar .filter-btn[data-filter].active { color: var(--gold); background: var(--gold-soft); }
+  .holdings-toolbar .controls { gap: 8px 15px; }
+  .holdings-date { font-size: 12px; color: var(--muted); }
+  .holdings-date input, .holding-view-select select, #searchAsset { background-color: var(--surface); color: var(--ink); }
+  .holdings-date input { min-height: 39px; }
+  .holdings-date input, .holding-view-select select, .v2-fields input { border-color: transparent; }
+  .holding-view-select select { min-height: 44px; }
+  #searchAsset { max-width: 100%; min-height: 39px; width: min(250px,100%); }
+  #marketPositions .table-wrap:focus-visible { outline-offset: -2px; }
+  .holdings-actions { margin: 0; }
+  #marketSubtotal { font-size: 12px; color: var(--ink); font-variant-numeric: tabular-nums; }
+  #marketStatus { font-size: 12px; }
+  .holding-table { min-width: 1150px; }
+  .holding-table th { padding: 14px 12px; }
+  .holding-table td { padding: 19px 12px; }
+  .holding-table :is(th,td):first-child { padding-left: 17px; }
+  .holding-table :is(th,td):last-child { padding-right: 17px; }
+  .holding-table .cell-note { margin-top: 5px; line-height: 1.55; }
+  .account-summary .table :is(th,td):first-child { padding-left: 22px; }
+  .account-summary .table :is(th,td):last-child { padding-right: 22px; }
+  @media (max-width: 560px) {
+    .holding-table :is(th,td) { padding: 16px 10px; }
+    .holding-table :is(th,td):first-child { padding-left: 12px; }
+  }
+  .holding-table td:first-child { min-width: 174px; }
+  #assetsTable :is(th,td):first-child {
+    position: sticky; left: 0; z-index: 1; background-color: var(--card);
+  }
+  #assetsTable th:first-child, #assetsTable tbody tr:hover td:first-child { background-color: var(--surface); }
+  #assetsTable .holding-editor {
+    width: 94px; padding: 6px 7px; border-color: transparent; background: var(--canvas);
+    border-radius: 7px; font: 12px var(--numbers); font-variant-numeric: tabular-nums;
+  }
+  #assetsTable .holding-editor:hover, #assetsTable .holding-editor:focus { border-color: var(--gold); }
+  #assetsTable td:nth-child(10) { min-width: 155px; font-size: 11px; color: var(--muted); }
+  #assetsTable td:last-child { font-size: 12px; color: var(--muted); font-variant-numeric: tabular-nums; white-space: nowrap; }
+  #assetsTable th[aria-sort]:not([aria-sort="none"]) { background-color: var(--gold-soft); }
+  .table-scroll-hint { display: none; margin: 0 0 7px; color: var(--muted); font-size: 11px; }
+
+  #riskMetrics { grid-template-columns: repeat(4,minmax(0,1fr)); }
+  #risk .v2-panel { margin-top: 14px; }
+  #riskLimits { margin-top: 0; }
+  #riskNotes, #discipline .v2-notes { padding: 0; margin-bottom: 0; list-style: none; }
+  #riskNotes li, #discipline .v2-notes li {
+    color: var(--muted); background: var(--surface); padding: 8px 10px; border-radius: 7px; line-height: 1.6;
+  }
+  #riskNotes li.v2-warning, #discipline .v2-notes li.v2-warning {
+    color: var(--gold); background: var(--gold-soft); border-left: 2px solid #a48352;
+  }
+  #discipline h3 { font-size: 16px; margin-bottom: 5px; }
+  #discipline p { margin: 0 0 9px; color: var(--muted); }
+  .rule, .source-shot { background: var(--card); border-color: var(--border); }
+  .rule-grid { gap: 12px; }
+  .rule { padding: 21px 24px; }
+  .foot { color: var(--muted); margin-top: 34px; }
+  .footer-badge { background: var(--surface); color: var(--muted); }
+
+  @media (max-width: 1280px) {
+    .table-scroll-hint { display: block; }
+  }
+  @media (max-width: 1020px) {
+    .charts { grid-template-columns: 1fr; }
+    .chart-flex { justify-content: start; }
+  }
+  @media (max-width: 820px) {
+    .top { align-items: start; flex-wrap: wrap; }
+    .actions { justify-content: start; }
+    .section { margin-top: 36px; }
+    #riskMetrics { grid-template-columns: repeat(2,minmax(0,1fr)); }
+    #discipline .metrics { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 560px) {
+    .page { padding: 26px 15px 42px; }
+    .top { margin-bottom: 16px; }
+    .actions .btn { min-height: 39px; padding: 8px 10px; font-size: 12px; }
+    .grid { gap: 10px; }
+    .section { margin-top: 31px; }
+    .metrics { grid-template-columns: 1fr; margin-top: 10px; }
+    .metric { padding: 22px 20px; }
+    .card-pad { padding: 24px 19px; }
+    .chart-flex { flex-direction: column; align-items: stretch; }
+    .donut { width: 145px; }
+    #searchAsset { width: 100%; }
+    .holdings-toolbar { padding: 16px 13px; }
+    .holdings-toolbar .filter-btn[data-filter] { padding-inline: 8px; }
+    .holdings-actions { gap: 8px; }
+    #assetsTable :is(th,td):first-child { min-width: 122px; max-width: 122px; }
+    #assetsTable .assetname { white-space: normal; overflow-wrap: anywhere; }
+    #riskMetrics .metric .mini-number { font-size: 20px; }
+    .foot { flex-wrap: wrap; }
+  }
+}
+.v2-panel { margin-top: 14px; }
+  #riskLimits { margin-top: 0; }
+  #riskNotes, #discipline .v2-notes { padding: 0; margin-bottom: 0; list-style: none; }
+  #riskNotes li, #discipline .v2-notes li {
+    color: var(--muted); background: var(--surface); padding: 8px 10px; border-radius: 7px; line-height: 1.6;
+  }
+  #riskNotes li.v2-warning, #discipline .v2-notes li.v2-warning {
+    color: var(--gold); background: var(--gold-soft); border-left: 2px solid #a48352;
+  }
+  #discipline h3 { font-size: 16px; margin-bottom: 5px; }
+  #discipline p { margin: 0 0 9px; color: var(--muted); }
+  .rule, .source-shot { background: var(--card); border-color: var(--border); }
+  .rule-grid { gap: 12px; }
+  .rule { padding: 17px 19px; }
+  .foot { color: var(--muted); margin-top: 34px; }
+  .footer-badge { background: var(--surface); color: var(--muted); }
+
+  @media (max-width: 1280px) {
+    .table-scroll-hint { display: block; }
+  }
+  @media (max-width: 1020px) {
+    .charts { grid-template-columns: 1fr; }
+    .chart-flex { justify-content: start; }
+  }
+  @media (max-width: 820px) {
+    .top { align-items: start; flex-wrap: wrap; }
+    .actions { justify-content: start; }
+    .hero { grid-template-columns: 1fr; }
+    .section { margin-top: 36px; }
+    #riskMetrics { grid-template-columns: repeat(2,minmax(0,1fr)); }
+    #discipline .metrics { grid-template-columns: 1fr; }
+    .summary-side .row .mini-number { font-size: clamp(18px, 3vw, 28px); }
+  }
+  @media (max-width: 560px) {
+    .page { padding: 26px 15px 42px; }
+    .top { margin-bottom: 16px; }
+    .actions .btn { min-height: 39px; padding: 8px 10px; font-size: 12px; }
+    .grid { gap: 10px; }
+    .section { margin-top: 31px; }
+    .metrics { grid-template-columns: 1fr; margin-top: 10px; }
+    .metric { padding: 14px 16px; }
+    .card-pad { padding: 16px; }
+    .hero-chips { gap: 8px; padding-top: 17px; }
+    .hero-chip { padding: 7px 9px; font-size: 11px; }
+    .summary-side .row { gap: 8px; }
+    .summary-side .row > div { padding: 8px; }
+    .chart-flex { flex-direction: column; align-items: stretch; }
+    .donut { width: 145px; }
+    #searchAsset { width: 100%; }
+    .holdings-toolbar { padding: 10px; }
+    .holdings-toolbar .filter-btn[data-filter] { padding-inline: 8px; }
+    .holdings-actions { gap: 8px; }
+    #assetsTable :is(th,td):first-child { min-width: 122px; max-width: 122px; }
+    #assetsTable .assetname { white-space: normal; overflow-wrap: anywhere; }
+    #riskMetrics .metric .mini-number { font-size: 20px; }
+    .foot { flex-wrap: wrap; }
+  }
+}
+.v2-panel { margin-top: 20px; }
+.v2-cards { grid-template-columns: repeat(2,minmax(0,1fr)); align-items: start; }
+.v2-cards > [hidden] { display: none; }
+.v2-review summary, .v2-panel summary { cursor: pointer; font-weight: 750; }
+.v2-review summary strong { margin-right: 12px; }
+.v2-review summary small { color: var(--muted); font-weight: 500; }
+.v2-panel form, .v2-review form { margin-top: 16px; }
+.v2-fields { display: flex; flex-wrap: wrap; gap: 12px; align-items: end; }
+.v2-fields label { flex: 1 1 150px; }
+.v2-fields .v2-wide { flex-basis: 100%; }
+.v2-fields input, .v2-fields textarea, .v2-fields select, .v2-tools select {
+  display: block; width: 100%; margin-top: 5px; padding: 9px 10px; font: inherit;
+  color: var(--ink); background: var(--canvas); border: 1px solid var(--border); border-radius: 8px;
+}
+.v2-tools select { display: inline-block; width: auto; margin: 0; }
+.v2-fields textarea { resize: vertical; min-height: 74px; }
+.v2-dimension { width: 100%; min-width: 0; margin: 0; padding: 12px 14px; border: 1px solid var(--border); border-radius: 10px; }
+.v2-dimension legend { padding: 0 6px; font-weight: 700; }
+.v2-notes { padding-left: 20px; overflow-wrap: anywhere; }
+.v2-notes li + li { margin-top: 8px; }
+.v2-warning { color: var(--gold); font-weight: 700; }
+.v2-status { color: var(--muted); }
+.v2-history { padding-top: 14px; margin-top: 18px; border-top: 1px solid var(--border); }
+.v2-history div { white-space: pre-wrap; }
+.v2-review h3, #discipline h3 { margin-top: 0; }
+@media (max-width: 980px) { .v2-cards { grid-template-columns: 1fr; } }
+@media print {
+  #risk form, #reviews form, .v2-tools, .v2-status, .v2-edit { display: none !important; }
+  .v2-warning { color: #785218; }
+  .v2-cards { grid-template-columns: 1fr 1fr; }
+}
+.holdings-date { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+.holdings-date input { font: inherit; color: var(--ink); background: var(--card); border: 1px solid var(--border); border-radius: 8px; padding: 6px 8px; }
+#assetsTable time { white-space: nowrap; }
+@media print { .holdings-date { display: none; } }
+.holdings-date[hidden] { display: none; }
+.holding-view-select { position: relative; display: inline-flex; align-items: center; }
+.holding-view-select select {
+  appearance: none; min-height: 44px; font: inherit; color: var(--ink);
+  background: var(--card); border: 1px solid var(--border); border-radius: 10px;
+  padding: 8px 40px 8px 14px; cursor: pointer;
+}
+.holding-view-select::after {
+  content: ''; position: absolute; right: 16px; top: calc(50% - 5px);
+  width: 7px; height: 7px; border-right: 2px solid var(--muted); border-bottom: 2px solid var(--muted);
+  transform: rotate(45deg); pointer-events: none;
+}
+.holding-view-select select:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
+
+#assetsTable .holding-editor { text-align: right; }
+.holdings-actions p { margin: 0; }
+.holdings-actions p:not([hidden]) + p:not([hidden]) { margin-top: 6px; }
+@media print { .holdings-toolbar, .table-scroll-hint { display: none; } }
+.btn[href] { display: inline-block; text-decoration: none; }
+.btn[hidden] { display: none; }
+.holding-sort { display: inline-flex; gap: 5px; align-items: center; padding: 0; background: none; border: 0; color: inherit; font: inherit; font-weight: inherit; }
+.holding-sort span { opacity: .45; }
+th[aria-sort]:not([aria-sort="none"]) .holding-sort { color: var(--gold); }
+th[aria-sort]:not([aria-sort="none"]) .holding-sort span { opacity: 1; }
+@media screen {
+  .market-loading, .market-updated { position: relative; }
+  .market-loading::before, .market-updated::before {
+    content: ''; position: absolute; z-index: 1; top: -5px; left: 0; right: 0; height: 4px;
+    border-radius: 999px; pointer-events: none; background-color: var(--border);
+  }
+  .market-loading::before {
+    background-image: linear-gradient(90deg, transparent, var(--gold) 25%, var(--gold) 75%, transparent);
+    background-size: 32% 100%; background-repeat: no-repeat;
+    animation: market-loading-bar .95s ease-in-out infinite alternate;
+  }
+  .market-updated::before {
+    background: var(--gold); transform-origin: left center;
+    animation: market-finish-bar .6s ease-out both;
+  }
+  .market-digit {
+    display: inline-block; position: relative; overflow: hidden; vertical-align: bottom;
+    font-variant-numeric: tabular-nums;
+  }
+  .market-digit > span { display: inline-block; animation: market-digit-in .38s cubic-bezier(.2,.7,.3,1) both; }
+  .market-digit::after {
+    content: attr(data-previous) / ''; position: absolute; inset: 0; text-align: center; pointer-events: none;
+    animation: market-digit-out .38s cubic-bezier(.2,.7,.3,1) both;
+  }
+  .market-digit > span, .market-digit::after { animation-delay: var(--digit-delay, 0ms); }
+  @keyframes market-loading-bar { from { background-position: 0% 0; } to { background-position: 100% 0; } }
+  @keyframes market-finish-bar {
+    0% { transform: scaleX(.68); opacity: 1; }
+    55% { transform: scaleX(1); opacity: 1; }
+    100% { transform: scaleX(1); opacity: 0; }
+  }
+  @keyframes market-digit-in { from { transform: translateY(100%); } to { transform: translateY(0); } }
+  @keyframes market-digit-out { from { transform: translateY(0); opacity: .65; } to { transform: translateY(-100%); opacity: 0; } }
+  @media (prefers-reduced-motion: reduce) {
+    .market-loading::before { animation: none; background-size: 100% 100%; }
+    .market-updated::before { display: none; }
+    .market-digit > span { animation: none; }
+    .market-digit::after { display: none; }
+  }
+}
+.overview-primary { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 28px; align-items: start; }
+.overview-label { font-size: 14px; margin: 0; font-weight: 700; }
+.overview-facts { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 20px; margin: 18px 0 0; }
+.overview-facts dd { margin: 0; font-variant-numeric: tabular-nums; }
+.overview-returns { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 22px; }
+.overview-holdings h3 { margin: 0; font-size: 15px; }
+.overview-charts summary { cursor: pointer; }
+@media screen {
+  .overview-lead { padding: clamp(26px, 3.5vw, 48px); }
+  .overview-primary { align-items: center; }
+  .overview-label { color: var(--gold); font-size: 14px; }
+  .overview-lead .big-num { margin: 12px 0 10px; }
+  .overview-returns { gap: clamp(18px, 3vw, 44px); align-self: end; padding-bottom: 13px; }
+  .overview-returns .mini-number {
+    font-size: clamp(20px, 2.45vw, 35px); line-height: 1.2; margin-top: 8px; white-space: nowrap;
+  }
+  .overview-facts {
+    margin-top: 28px; padding: 16px 19px; border-radius: 9px;
+    background: #0b0c0e56; grid-template-columns: 1fr 1fr 1.15fr;
+  }
+  .overview-facts dt { font-size: 12px; color: var(--muted); }
+  .overview-facts dd { color: var(--ink); font-size: clamp(14px, 1.36vw, 19px); font-weight: 650; margin-top: 3px; }
+  .overview-holdings { margin-top: 16px; padding: 20px clamp(20px, 2.8vw, 36px) 23px; }
+  .overview-holdings h3 { color: var(--ink); font-weight: 700; }
+  .overview-holdings .metrics { margin-top: 14px; gap: 28px; }
+  .overview-holdings .metric { padding: 0; }
+  .overview-holdings .metric .mini-number { font-size: clamp(21px, 2.25vw, 31px); margin: 4px 0 5px; }
+  .overview-charts { margin-top: 17px; }
+  .overview-charts > summary {
+    list-style: none; display: flex; align-items: center; justify-content: space-between; gap: 12px;
+    padding: 13px 18px; border-radius: 9px; background: var(--card);
+    font-weight: 650; color: var(--muted);
+  }
+  .overview-charts > summary::-webkit-details-marker { display: none; }
+  .overview-charts > summary::after {
+    content: ''; width: 7px; height: 7px; border-bottom: 2px solid currentColor; border-right: 2px solid currentColor;
+    transform: rotate(45deg); margin: -4px 4px 0 0;
+  }
+  .overview-charts[open] > summary::after { transform: rotate(225deg); margin-top: 4px; }
+  .overview-charts > summary:hover, .overview-charts[open] > summary { color: var(--ink); }
+  @media (max-width: 820px) {
+    .overview-primary { grid-template-columns: 1fr; gap: 18px; }
+    .overview-returns { padding: 0; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
+    .overview-returns .mini-number { font-size: clamp(21px, 4vw, 29px); }
+    .overview-facts { margin-top: 21px; gap: 12px; }
+  }
+  @media (max-width: 560px) {
+    .overview-lead { padding: 23px 18px; }
+    .overview-facts { grid-template-columns: repeat(2,minmax(0,1fr)); padding: 12px; }
+    .overview-facts > div:last-child { grid-column: 1 / -1; }
+    .overview-holdings { padding: 17px 18px 20px; }
+    .overview-holdings .metrics { gap: 14px; }
+    .overview-holdings .metric { display: grid; grid-template-columns: minmax(0,1fr) auto; align-items: baseline; gap: 2px 8px; }
+    .overview-holdings .metric .mini-number { margin: 0; text-align: right; }
+    .overview-holdings .metric .hint { grid-column: 1 / -1; }
+  }
+}
+@media print {
+  .overview-holdings { margin-top: 12px; padding: 12px; }
+  .overview-charts > summary { display: none; }
+}
+@media screen {
+  body { background: var(--canvas); }
+  .main-card {
+    background: radial-gradient(ellipse at 91% 0%, #d3a25973 0%, #ae7a3c35 35%, transparent 65%), linear-gradient(115deg, #141314, #201b17 54%, #2b2118);
+  }
+  @supports (backdrop-filter: blur(10px)) {
+    .card, .holdings-toolbar, .overview-charts > summary, .rule {
+      background: linear-gradient(145deg, #ffffff04, #ffffff00 70%), #111110ee;
+      backdrop-filter: blur(16px) saturate(115%);
+      box-shadow: 0 10px 28px #00000022;
+    }
+    .main-card {
+      background: radial-gradient(ellipse at 91% 0%, #d3a25973 0%, #ae7a3c35 35%, transparent 65%), linear-gradient(115deg, #141314fa, #201b17f5 54%, #2b2118f5);
+    }
+    .overview-facts, #riskNotes li:not(.v2-warning), #discipline .v2-notes li:not(.v2-warning) {
+      background: #09090843;
+    }
+    #assetsTable .holding-editor { background: #111110; }
+    #assetsTable :is(th,td):first-child { background: #111110; }
+    #assetsTable th:first-child, #assetsTable tbody tr:hover td:first-child { background: var(--surface); }
+  }
+}
+  #privacyNotice { margin: 30px 0; color: var(--muted); }
+  #privacyNotice[hidden], #privacyToggle[hidden] { display: none; }
+  :root[data-privacy="hidden"] #ledgerData,
+  :root[data-privacy="hidden"] [data-private-control] { display: none !important; }
+  :root[data-privacy="hidden"] #privacyNotice { display: block; }
+  @media print { #privacyToggle { display: none !important; } }
+@media screen {
+  #assetsTable .position-controls { white-space: nowrap; }
+  #assetsTable .position-controls button + button { margin-left: 6px; }
+  #assetsTable .position-controls button[hidden], #positionActionsHeading[hidden] { display:none; }
+}
+  .account-disclosure > summary { display:flex; align-items:center; justify-content:space-between; gap:16px; width:100%; cursor:pointer; list-style:none; }
+  .account-disclosure > summary::-webkit-details-marker { display:none; }
+  .account-disclosure > summary::after { content:""; flex:none; margin-right:8px; width:8px; height:8px; border:solid currentColor; border-width:0 2px 2px 0; transform:rotate(45deg); }
+  .account-disclosure[open] > summary::after { transform:rotate(225deg); }
+  .daily-trend-wrap { position:relative; width:100%; max-width:740px; }
+  .daily-trend-tip { position:absolute; z-index:2; max-width:calc(100% - 12px); padding:8px 12px; background:var(--surface,#171717); color:var(--ink,#fff); border-radius:8px; box-shadow:0 4px 18px #0006; pointer-events:none; white-space:pre-line; font-size:.85rem; }
+  html.portfolio-locked body > :not(#portfolioLockDialog) { visibility:hidden; }
+  #portfolioLockDialog { box-sizing:border-box; width:min(480px,calc(100% - 32px)); background:rgba(27,25,23,.68); color:#f3f3f3; border:1px solid rgba(255,255,255,.16); border-radius:22px; padding:clamp(22px,5vw,40px); -webkit-backdrop-filter:blur(22px) saturate(125%); backdrop-filter:blur(22px) saturate(125%); box-shadow:0 18px 64px rgba(0,0,0,.48); }
+  #portfolioLockDialog::backdrop {
+    background-color:#101010;
+    background-image:radial-gradient(ellipse at center,#443523 0%,transparent 58%);
+    background-size:160% 160%;
+    background-repeat:no-repeat;
+    animation:portfolio-lock-glow 18s ease-in-out infinite alternate;
+  }
+  @keyframes portfolio-lock-glow {
+    from { background-position:15% 20%; }
+    to { background-position:85% 80%; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    #portfolioLockDialog::backdrop { animation:none; background-position:center; }
+  }
+  #portfolioLockDialog form { display:grid; gap:18px; }
+  #portfolioLockTitle { margin:0; }
+  #portfolioLockDialog label:not([hidden]) { display:grid; gap:9px; }
+  #portfolioLockDialog input { box-sizing:border-box; width:100%; min-height:56px; padding:12px 16px; border-radius:12px; background:rgba(10,10,10,.55); color:inherit; border:1px solid rgba(255,255,255,.24); font:inherit; font-size:1.2rem; letter-spacing:.14em; }
+  #portfolioLockDialog input:focus { outline:2px solid #d5ae76; outline-offset:2px; }
+  #holdingColumnSettings { margin:14px 0; padding:12px 16px; border-radius:14px; background:var(--surface); }
+  #holdingColumnSettings > summary { display:flex; align-items:center; justify-content:space-between; cursor:pointer; list-style:none; font-weight:600; }
+  #holdingColumnSettings > summary::-webkit-details-marker { display:none; }
+  #holdingColumnSettings > summary::after { content:""; width:7px; height:7px; border:solid currentColor; border-width:0 2px 2px 0; transform:rotate(45deg); margin-right:4px; }
+  #holdingColumnSettings[open] > summary::after { transform:rotate(225deg); }
+  #holdingColumnOptions { display:flex; flex-wrap:wrap; gap:8px; margin:14px 0; }
+  #holdingColumnOptions label { display:inline-flex; align-items:center; gap:7px; padding:7px 11px; border-radius:9px; background:rgba(128,128,128,.12); cursor:pointer; }
+  #holdingColumnOptions input { margin:0; accent-color:#d5ae76; }
+  #holdingColumnStatus { margin-inline-start:10px; }
+</style>
+<script>
+try {
+  if (sessionStorage.getItem('investment-panorama-online-privacy') === 'hidden') {
+    document.documentElement.dataset.privacy = 'hidden';
+  }
+} catch {}
+</script></head>
+<body><main class="page">
+<header class="top"><div><span class="eyebrow">投资账本 · 线上版</span><h1>投资全景</h1><time id="headerToday" class="datepill"></time> </div><div class="actions"><button id="privacyToggle" type="button" class="btn" aria-controls="ledgerData" aria-pressed="false" hidden>隐藏数据</button><button data-private-control id="refreshMarketTop" type="button" class="btn dark">一键刷新</button><span data-private-control id="topRefreshStatus" class="muted" role="status" hidden></span><button data-private-control class="btn" onclick="window.print()">打印 / 保存 PDF</button><button data-private-control class="btn dark" id="exportCsv">导出持仓 CSV</button></div></header>
+<p id="privacyNotice" role="status" hidden>投资数据已隐藏</p>
+<div id="ledgerData">
+<nav class="tabs"><a href="#overview">账户总览</a><a href="#accounts">账户核对</a><a href="#details">持仓明细</a><a href="#risk">组合风险</a><a href="#weekly-risk">周风险分析</a><a href="#discipline">投资纪律</a><a href="#reviews">持仓记录</a><a href="#method">统计说明</a></nav>
+<aside class="card card-pad" aria-labelledby="investmentReminderTitle" style="margin-block:10px 14px;padding-block:16px">
+  <h2 id="investmentReminderTitle" class="mini-label" style="margin:0 0 12px">投资提醒</h2>
+  <blockquote style="margin:0;line-height:1.75">
+    <p style="margin:0 0 8px">“如果现在手里是现金，这支票还愿意买入吗？若不愿意，就别因亏损和不甘心而继续持有。”</p>
+    <p style="margin:0">“决定退出，就坚决执行，不留底仓、不贪高点。宁可卖飞少赚，不让犹豫变亏损。”</p>
+  </blockquote>
+</aside>
+<section id="overview" aria-label="账户总览">
+  <div class="card main-card card-pad overview-lead">
+    <div class="overview-primary">
+      <div class="overview-total">
+        <h2 class="overview-label">投资账户总资产</h2>
+        <div class="big-num">—</div>
+        <div id="portfolioPricingNote">暂无持仓</div>
+      </div>
+      <div class="overview-returns">
+        <div>
+          <div class="mini-label">今日收益</div>
+          <div id="overviewTodayPnl" class="mini-number">待更新</div>
+          <small id="overviewTodayPnlNote" class="muted">等待今日行情记录</small>
+        </div>
+        <div>
+          <div class="mini-label">今日收益率</div>
+          <div id="overviewTodayRate" class="mini-number">待更新</div>
+        </div>
+        <div>
+          <div class="mini-label">估算账户净差额</div>
+          <div id="overviewAccountDifference" class="mini-number neg">—</div>
+        </div>
+        <div>
+          <div class="mini-label">账户累计收益率</div>
+          <div id="overviewAccountReturn" class="mini-number neg">—</div>
+        </div>
+        <div>
+          <div class="mini-label">较原始快照收益率变化</div>
+          <div id="overviewBaselineChange" class="mini-number">—</div>
+          <small class="muted">当前累计收益率减去原始累计收益率</small>
+        </div>
+      </div>
+    </div>
+    <dl class="overview-facts">
+      <div><dt>持仓市值</dt><dd id="overviewMarketValue">—</dd></div>
+      <div><dt>证券可用现金</dt><dd id="overviewCash">—</dd></div>
+      <div><dt>估算投入 / 持仓成本</dt><dd id="overviewCapital">—</dd></div>
+    </dl>
+  </div>
+  <div class="card overview-holdings">
+    <h3>持仓分类</h3>
+    <div class="grid metrics">
+      <article class="metric"><div class="mini-label">股票</div><div class="mini-number">—</div><div class="hint">持仓盈亏 · <span id="overviewStockPnl">—</span></div></article>
+      <article class="metric"><div class="mini-label">直接黄金</div><div class="mini-number">—</div><div class="hint">持仓盈亏 · <span id="goldOverviewPnl">—</span><span id="goldOverviewNote"></span></div></article>
+      <article class="metric"><div class="mini-label">非黄金基金</div><div class="mini-number">—</div><div class="hint">持仓盈亏 · <span id="overviewOtherPnl">—</span></div></article>
+    </div>
+  </div>
+  <details id="overviewCharts" class="overview-charts">
+    <summary>资产构成与盈亏图表</summary>
+    <div class="grid charts">
+      <div class="card card-pad"><h3 class="chart-title">当前资产构成</h3><div class="chart-flex"><div class="donut"><div class="donut-center"><strong>资产占比</strong></div></div><div class="legend"><div class="legendrow"><span class="legend-name"><i style="background:#354cb6"></i>股票持仓</span><span class="num">—</span></div><div class="legendrow"><span class="legend-name"><i style="background:#c5a46f"></i>黄金积存金</span><span class="num">—</span></div><div class="legendrow"><span class="legend-name"><i style="background:#e0bd87"></i>黄金基金</span><span class="num">—</span></div><div class="legendrow"><span class="legend-name"><i style="background:#7a82a1"></i>其他基金</span><span class="num">—</span></div><div class="legendrow"><span class="legend-name"><i style="background:#78baa0"></i>证券现金</span><span class="num">—</span></div></div></div><p class="capture"></p></div>
+      <div class="card card-pad"><h3 class="chart-title">盈亏与账户差额</h3><p class="chart-subtitle"></p><div class="loss-item"><div class="loss-line"><span>黄金持仓盈亏</span><span class="num"><strong>—</strong><small>—</small></span></div><div class="loss-track"><div class="loss-fill fill-黄金"></div></div></div><div class="loss-item"><div class="loss-line"><span>其他基金持仓盈亏</span><span class="num"><strong>—</strong><small>—</small></span></div><div class="loss-track"><div class="loss-fill fill-基金"></div></div></div><div class="loss-item"><div class="loss-line"><span>证券账户净差额</span><span class="num"><strong>—</strong><small>—</small></span></div><div class="loss-track"><div class="loss-fill fill-股票"></div></div></div><p class="callout"></p></div>
+    </div>
+  </details>
+</section>
+
+<section class="section" id="accounts"><details class="account-disclosure"><summary class="header-row"><div><h2 class="section-title">账户级核对</h2></div></summary><p class="section-subtitle">三个独立账户：证券账户、基金账户、积存金账户。证券现金已包含在证券账户内。</p><div class="card account-summary"><div class="table-wrap"><table class="table"><thead><tr><th>账户</th><th class="num">投入 / 估算成本</th><th class="num">当前市值</th><th class="num">账户盈亏</th><th class="num">收益率</th></tr></thead><tbody><tr><td><strong>证券账户</strong><span class="cell-note"></span></td><td class="num">—</td><td class="num">—</td><td class="num">—</td><td class="num">—</td></tr><tr><td><strong>基金账户</strong><span class="cell-note"></span></td><td class="num">—</td><td class="num">—</td><td class="num">—</td><td class="num">—</td></tr><tr><td><strong>积存金账户</strong><span class="cell-note"></span></td><td class="num">—</td><td class="num">—</td><td class="num">—</td><td class="num">—</td></tr></tbody><tfoot><tr><td><strong>合计</strong><span class="cell-note"></span></td><td class="num">—</td><td class="num">—</td><td class="num">—</td><td class="num">—</td></tr></tfoot></table></div></div><p class="callout"></p><details class="v2-panel"><summary>成交记录与证券现金流水</summary><ul id="stockCashLedger" class="v2-notes"></ul></details></details></section>
+<section class="section" aria-labelledby="dailyTrendTitle">
+  <div class="card card-pad">
+    <h2 id="dailyTrendTitle" class="section-title">每日持仓盈亏曲线</h2>
+    <div class="daily-trend-wrap"><canvas id="dailyTrend" width="740" height="200" style="width:100%;max-width:740px" role="img" aria-label="每日持仓盈亏趋势"></canvas><div id="dailyTrendTip" class="daily-trend-tip" role="status" hidden></div></div>
+    <p id="dailyTrendCaption" class="muted"></p>
+  </div>
+</section>
+<section id="details" class="section"><div class="header-row"><div><h2 class="section-title">持仓明细</h2><p class="section-subtitle"><span id="holdingModeHint">录入持仓后，可按日期查看历史快照。</span></p></div></div>
+<div class="holdings-toolbar">
+  <div class="holdings-toolbar-row"><div class="filters"><button class="filter-btn active" data-filter="all">全部</button><button class="filter-btn" data-filter="stocks">股票</button><button class="filter-btn" data-filter="gold">黄金</button><button class="filter-btn" data-filter="funds">其他基金</button><button class="filter-btn" data-filter="cash">现金</button></div><input id="searchAsset" class="search" placeholder="搜索资产或账户名称" aria-label="搜索资产或账户名称"></div>
+  <div class="holdings-toolbar-row">
+    <div class="controls"><label id="holdingModeControl" class="holdings-date" hidden>数据视图 <span class="holding-view-select"><select id="holdingMode"><option value="live">动态持仓</option><option value="snapshot">原始快照</option></select></span></label><label class="holdings-date">数据日期 <input id="holdingDate" type="date"><button id="clearHoldingDate" class="filter-btn" type="button">清除日期</button></label></div>
+  </div>
+  <div class="header-row holdings-actions">
+  <div>
+    <p id="marketStatus" class="muted" role="status"></p>
+    <p id="marketSubtotal" aria-live="polite" hidden></p>
+  </div>
+  <div class="controls">
+    <button id="refreshMarket" class="btn" type="button" hidden>刷新行情</button>
+    <button id="manageMarketPositions" class="btn" type="button" aria-controls="assetsTable" aria-expanded="false" hidden>操作</button>
+    <button id="openAddHolding" class="btn" type="button">新增持仓</button>
+    <button id="saveOnlineSnapshot" class="btn" type="button">保存今日快照</button>
+  </div>
+</div>
+</div>
+<details id="holdingColumnSettings"><summary>显示列设置</summary><div id="holdingColumnOptions" class="controls"></div><button id="saveHoldingColumns" type="button" class="btn">保存设置</button><span id="holdingColumnStatus" role="status"></span></details>
+<p class="table-scroll-hint">可横向滚动查看成本、盈亏和行情日期</p>
+<form id="marketPositions">
+<div class="card"><div class="table-wrap" tabindex="0" role="region" aria-label="持仓明细表"><table class="table holding-table" id="assetsTable"><thead><tr><th>资产名称 / 账户</th><th>分类</th><th class="num">持有数量</th><th class="num">参考现价</th><th class="num" aria-sort="none"><button type="button" class="holding-sort" data-sort-column="4">参考成本价<span aria-hidden="true">↓</span></button></th><th class="num" aria-sort="none"><button type="button" class="holding-sort" data-sort-column="5">当前市值<span aria-hidden="true">↓</span></button></th><th class="num" aria-sort="none"><button type="button" class="holding-sort" data-sort-column="6">持仓总成本<span aria-hidden="true">↓</span></button><sup aria-hidden="true">†</sup></th><th class="num" aria-sort="none"><button type="button" class="holding-sort" data-sort-column="7">持有盈亏<span aria-hidden="true">↓</span></button></th><th class="num" aria-sort="none"><button type="button" class="holding-sort" data-sort-column="8">收益率<span aria-hidden="true">↓</span></button></th><th>来源 / 说明</th><th>数据日期</th><th class="num" aria-sort="none"><button type="button" class="holding-sort" data-sort-column="11">今日收益<span aria-hidden="true">↓</span></button></th><th class="num" aria-sort="descending"><button type="button" class="holding-sort" data-sort-column="12">今日收益率<span aria-hidden="true">↓</span></button></th><th class="num" aria-sort="none"><button type="button" class="holding-sort" data-sort-column="13">较原始收益率变化<span aria-hidden="true">↓</span></button></th><th id="positionActionsHeading" hidden>操作</th></tr></thead><tbody></tbody></table><div class="no-results" id="noResults">没有匹配的资产记录</div></div></div></form><p id="export-hint" class="capture">持仓成本为本地录入及成交更新后的账面成本。行情列标明价格来源及日期。</p>
+<details class="card card-pad v2-panel"><summary>账户与行情设置</summary>
+ <form id="onlineConfig" class="v2-fields" autocomplete="off">
+  <label>证券累计投入（元）<input name="capital" type="number" min="0" step="0.01" placeholder="留空时使用持仓成本与现金"></label>
+  <label>HTTPS 行情服务地址<input name="endpoint" type="url" maxlength="400" placeholder="未配置时可手动维护价格"></label>
+  <button type="submit" class="btn">保存设置</button>
+ </form>
+ <p class="muted">证券累计投入用于账户核对。行情查询仅发送证券代码。</p>
+</details>
+<dialog id="onlineHoldingDialog" class="card card-pad">
+ <form id="onlineHoldingForm" class="v2-fields" autocomplete="off">
+  <h3 id="onlineHoldingTitle">新增持仓</h3>
+  <label>资产名称<input name="name" maxlength="80" required></label>
+  <label>类别<select name="group"><option value="stocks">股票</option><option value="other_fund">其他基金</option><option value="gold_etf">黄金联接基金</option><option value="gold_acc">积存金</option></select></label>
+  <label>行情代码<input name="code" maxlength="12" placeholder="股票带 sh 或 sz，基金填六位代码"></label>
+  <label>持有数量<input name="qty" type="number" min="0" step="any" required></label>
+  <label>参考价 / 单位净值<input name="price" type="number" min="0" step="any" required></label>
+  <label>持仓总成本<input name="basis" type="number" step="0.01" required></label>
+  <button type="submit" class="btn dark">保存持仓</button><button id="cancelOnlineHolding" type="button" class="btn">取消</button><button id="deleteOnlineHolding" type="button" class="btn" hidden>删除持仓</button>
+  <p id="onlineHoldingStatus" role="status"></p>
+ </form>
+</dialog>
+</section>
+<section class="section" id="risk">
+  <h2 class="section-title">组合风险总览</h2>
+  <p class="section-subtitle"><span id="riskPricingNote">本地持仓。</span> 占比以含现金总资产为分母。</p>
+  <div id="riskMetrics" class="grid metrics"></div>
+  <div class="card card-pad v2-panel">
+    <form id="riskLimits" class="v2-fields">
+      <label>单只风险资产提醒 ≥ %<input name="single" type="number" min="1" max="100" step="0.1" required></label>
+      <label>直接黄金提醒 ≥ %<input name="gold" type="number" min="1" max="100" step="0.1" required></label>
+      <label>现金比例提醒 &lt; %<input name="cash" type="number" min="0" max="100" step="0.1" required></label>
+      <button class="btn" type="submit">保存风险阈值</button>
+    </form>
+    <ul id="riskNotes" class="v2-notes"></ul>
+  </div>
+  <details class="card card-pad v2-panel">
+    <summary>账户历史与回撤</summary>
+    <p class="muted">联网成功刷新行情后，自动保存当天的账户总资产与逐项持仓快照；同一天只保存最后一次有效刷新。也可手工补录总资产。至少三期才显示最大回撤，资金流动会影响账户价值变化。</p>
+    <form id="snapshotForm" class="v2-fields">
+      <label>快照日期<input name="date" type="date" required></label>
+      <label>含现金总资产（元）<input name="value" type="number" min="0" max="999999999999" step="0.01" required></label>
+      <button class="btn" type="submit">新增历史快照</button>
+    </form>
+    <p id="snapshotStats" aria-live="polite"></p>
+    <ul id="dailyChanges" class="v2-notes"></ul>
+    <ul id="snapshotList" class="v2-notes"></ul>
+    <details class="v2-panel"><summary>每日持仓历史</summary><div class="table-wrap"><table class="table"><thead><tr><th>日期</th><th>资产</th><th class="num">数量</th><th class="num">参考价格</th><th class="num">市值</th><th class="num">持仓成本</th><th class="num">持仓盈亏</th><th>行情日期 / 来源</th></tr></thead><tbody id="dailyHistoryRows"></tbody></table><p id="dailyHistoryEmpty" class="muted">成功刷新行情后会从今天开始累计。</p></div></details>
+    <div class="controls v2-tools">
+      <button id="downloadReviews" type="button" class="btn dark">导出 JSON</button>
+      <button id="uploadReviews" type="button" class="btn">导入 JSON</button>
+      <input id="reviewFile" type="file" accept=".json,application/json" hidden>
+    </div>
+  <p id="reviewStatus" class="v2-status" role="status">记录保存在当前浏览器，JSON 备份可用于迁移。</p>
+  </details>
+</section>
+<section class="section" id="weekly-risk"><h2 class="section-title">周风险分析</h2>
+<p class="section-subtitle">按当前持仓估值重算</p><div class="grid metrics"><article class="card metric"><div class="mini-label">直接黄金占比</div><div id="weeklyGold" class="mini-number">—</div><div class="hint">积存金及黄金联接基金</div></article><article class="card metric"><div class="mini-label">直接黄金与前两大股票占比</div><div id="weeklyConcentration" class="mini-number">—</div><div class="hint">按股票市值选择前两大持仓</div></article><article class="card metric"><div class="mini-label">账户可用现金</div><div id="weeklyCash" class="mini-number">—</div><div class="hint">证券账户现金</div></article></div>
+<div class="card card-pad v2-panel"><h3 class="chart-title">压力测试</h3><p class="chart-subtitle">假设其他资产价格不变</p>
+<div class="table-wrap"><table class="table"><thead><tr><th>假设情景</th><th>账户变动</th><th>占总资产</th></tr></thead><tbody id="weeklyStress"><tr><td>直接黄金跌 10%</td><td class="num">—</td><td class="num">—</td></tr><tr><td>前两大股票各跌 20%</td><td class="num">—</td><td class="num">—</td></tr><tr><td>上述情景同时发生</td><td class="num">—</td><td class="num">—</td></tr></tbody></table></div>
+<p class="muted">黄金超过总资产 25% 的金额：<span id="weeklyGoldAdjustment">—</span></p></div></section>
+<section class="section" id="discipline">
+  <h2 class="section-title">投资纪律</h2>
+  <div class="grid metrics">
+    <article class="card metric"><h3>股票</h3><p>持仓收益率达到 +5% 时启动正式评估。基本面恶化或风险严重集中可提前评估。</p><ul id="stockSignals" class="v2-notes"></ul></article>
+    <article class="card metric"><h3>非黄金基金</h3><p>亏损收窄至 5% 以内时评估退出条件，回本时再次评估。长期跑输基准、经理或策略变化可提前评估。回本由人工判断是否操作。</p><ul id="fundSignals" class="v2-notes"></ul></article>
+    <article class="card metric"><h3>黄金</h3><p>按长期配置计划，定期复核黄金周期与配置占比。积存金及黄金 ETF 联接基金沿用黄金纪律。</p><ul id="goldSignals" class="v2-notes"></ul></article>
+  </div>
+</section>
+<section class="section" id="reviews">
+  <div class="header-row">
+    <div><h2 class="section-title">持仓记录</h2><p class="section-subtitle">展开资产即可添加或查看记录。</p></div>
+    <div class="controls v2-tools">
+      <label>资产分类 <select id="reviewFilter"><option value="all">全部</option><option value="stocks">股票</option><option value="funds">非黄金基金</option><option value="gold">黄金</option><option value="cash">现金</option></select></label>
+
+    </div>
+  </div>
+
+  <div id="reviewCards" class="grid v2-cards"></div>
+</section>
+<section class="section" id="method"><h2 class="section-title">计算口径与数据说明</h2><div class="rule-grid">
+<div class="rule"><h4>总资产与账户投入</h4><p>总资产包含证券可用现金。证券账户可单独录入累计投入；留空时以股票账面成本和现金估算。</p></div>
+<div class="rule"><h4>今日收益</h4><p>按已发布行情与前值估算，表格逐项标注日期。今日股票行情可用时先显示股票，其他资产今日行情齐全后更新合计。</p></div>
+<div class="rule"><h4>历史快照</h4><p>每个日期保留最后保存的快照。首次保存的日期作为原始快照；转入、转出或成交会影响数据之间的可比性。</p></div>
+<div class="rule"><h4>本地记录</h4><p>账本只写入当前浏览器。换设备前可导出 JSON，行情服务只接收证券代码。</p></div>
+</div></section>
+<footer class="foot"><span>投资全景 · 本地账本</span></footer>
+</div>
+</main>
+<script>
+const entries=[];
+let onlineBaseline=null;
+const onlineGroupLabels={stocks:'股票',other_fund:'其他基金',gold_etf:'黄金联接基金',gold_acc:'积存金',cash:'现金'};
+function onlineRow(asset) {
+  const row=document.createElement('tr');
+  row.dataset.group=['gold_acc','gold_etf'].includes(asset.group)?'gold':asset.group==='other_fund'?'funds':asset.group;
+  row.dataset.term=[asset.name,asset.acct,asset.code,onlineGroupLabels[asset.group]].join(' ').toLowerCase();
+  const label=document.createElement('div');
+  label.className='assetname';
+  label.textContent=asset.name;
+  const account=document.createElement('small');
+  account.className='muted';
+  account.textContent=[asset.acct,asset.code].filter(Boolean).join(' · ');
+  row.insertCell().append(label,account);
+  row.insertCell().textContent=onlineGroupLabels[asset.group] || '资产';
+  for (let i=2;i<=10;i++) {
+    const cell=row.insertCell();
+    cell.textContent='—';
+    if (i<=8) cell.className='num';
+  }
+  return row;
+}
+
+(function(){
+ const filterButtons=[...document.querySelectorAll('[data-filter]')];
+ const body=document.querySelector('#assetsTable tbody');
+ const snapshotRows=[...body.rows];
+ const mode=document.getElementById('holdingMode');
+ const hint=document.getElementById('holdingModeHint');
+ const snapshotHint=hint.textContent;
+ let liveEntries=null;
+ let liveRows=[];
+ const input=document.getElementById('searchAsset');
+ const dateInput=document.getElementById('holdingDate');
+ let filter='all';
+ const sortButtons=[...document.querySelectorAll('#assetsTable [data-sort-column]')];
+ const columnKey='investment-panorama-online-columns-v2';
+ const columnOptions=document.getElementById('holdingColumnOptions');
+ const headings=[...document.querySelectorAll('#assetsTable thead th')];
+ let hiddenColumns=[];
+ try {
+   const saved=JSON.parse(localStorage.getItem(columnKey));
+   if (Array.isArray(saved)) hiddenColumns=saved;
+ } catch {}
+ for (const [index,heading] of headings.entries()) {
+   if (index===0 || heading.id==='positionActionsHeading') continue;
+   const label=document.createElement('label');
+   const box=document.createElement('input');
+   Object.assign(box,{type:'checkbox',value:String(index),checked:!hiddenColumns.includes(index)});
+   label.append(box,' '+heading.textContent.replace(/[↓↑†]/g,'').trim());
+   columnOptions.append(label);
+ }
+ function applyHoldingColumns() {
+   for (let index=1; index<headings.length-1; index++) {
+     const hidden=hiddenColumns.includes(index);
+     headings[index].style.display=hidden?'none':'';
+     for (const row of body.rows) if (row.cells[index]) row.cells[index].style.display=hidden?'none':'';
+   }
+ }
+ document.getElementById('saveHoldingColumns').onclick=()=>{
+   const next=[...columnOptions.querySelectorAll('input:not(:checked)')].map(box=>Number(box.value));
+   const status=document.getElementById('holdingColumnStatus');
+   try {
+     localStorage.setItem(columnKey,JSON.stringify(next));
+     hiddenColumns=next;
+     applyHoldingColumns();
+     status.textContent='已保存';
+   } catch { status.textContent='浏览器无法保存设置'; }
+ };
+ let sortColumn=12;
+ let sortDirection='descending';
+ function numericCell(row,column) {
+   const cell=row.cells[column];
+   const text=(cell.dataset.sortValue ?? cell.textContent).trim().replaceAll('−','-').replace(/[¥￥,%+†\s]/g,'');
+   return /^-?\d+(?:\.\d+)?$/.test(text) ? Number(text) : null;
+ }
+
+ function refresh(){const q=input.value.trim().toLowerCase(); let count=0; [...body.rows].forEach(tr=>{const ok=(filter==='all'||tr.dataset.group===filter)&&(!dateInput.value||tr.dataset.date===dateInput.value)&&tr.dataset.term.includes(q);tr.style.display=ok?'':'none';if(ok)count++}); document.getElementById('noResults').style.display=count?'none':'block';}
+ let dailyHistory = new Map();
+ function portfolioCalendarDate() {
+   const parts = new Intl.DateTimeFormat('sv-SE',{timeZone:'Asia/Shanghai',year:'numeric',month:'2-digit',day:'2-digit'}).formatToParts(new Date());
+   return parts.filter(part=>part.type!=='literal').map(part=>part.value).join('-');
+ }
+ const selectedHistory = () => dailyHistory.get(dateInput.value) ?? (mode.value==='snapshot' && !dateInput.value ? [...dailyHistory.values()].sort((a,b)=>a.date.localeCompare(b.date))[0] : null);
+ const useLive=()=>!dateInput.value && liveEntries!==null && mode.value==='live';
+ const manage=document.getElementById('manageMarketPositions');
+ let managing=false;
+ manage.onclick=()=>{
+   if(managing && !endEdit()) return;
+   managing=!managing;
+   showMode();
+   if (managing) {
+     const tableWrap=document.getElementById('assetsTable').closest('.table-wrap');
+     requestAnimationFrame(()=>{
+       if (!managing) return;
+       tableWrap.scrollTo({
+         left:tableWrap.scrollWidth-tableWrap.clientWidth,
+         behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'instant':'smooth'
+       });
+     });
+   }
+ };
+ let cancelEdit=null;
+ function endEdit() {
+   if (!cancelEdit) return true;
+   return cancelEdit(true);
+ }
+ function showMode() {
+   const live = useLive();
+   const record = selectedHistory();
+   const rows = record ? record.holdings.flatMap(holding => {
+     const row=onlineRow({...holding,group:holding.category});
+     const unitCost = holding.qty > 0 && holding.cost !== null ? holding.cost / holding.qty : null;
+     const rate = holding.cost > 0 && holding.pnl !== null ? holding.pnl / holding.cost * 100 : null;
+     const values = [holding.qty,holding.price,unitCost,holding.value,holding.cost,holding.pnl,rate];
+     values.forEach((value,index)=>{
+       const cell = row.cells[index+2];
+       delete cell.dataset.sortValue;
+       cell.classList.remove('pos','neg');
+       cell.textContent = value == null ? '—' : index===0 ? String(value) :
+         index===6 ? value.toFixed(2)+'%' : '¥'+value.toLocaleString('zh-CN',{maximumFractionDigits:index<3?4:2,minimumFractionDigits:2});
+       if (value != null) {
+         cell.dataset.sortValue = String(value);
+         if (index>=5 && value!==0) cell.classList.add(value>0?'pos':'neg');
+       }
+     });
+     row.dataset.date = record.date;
+     row.cells[9].textContent = holding.source || '来源待更新';
+     row.cells[10].textContent = holding.marketDate || '—';
+     return [row];
+   }) : [...(live?liveRows:snapshotRows)];
+   const current = record ?? (live && !dateInput.value ? dailyHistory.get(portfolioCalendarDate()) : null);
+   const prior = current && [...dailyHistory.values()].filter(item=>item.date<current.date)
+     .sort((a,b)=>b.date.localeCompare(a.date))[0];
+   const earlier = new Map(prior?.holdings.map(item=>[item.name,item]));
+   const latest = new Map(current?.holdings.map(item=>[item.name,item]));
+   for (const row of rows) {
+     const name = row.querySelector('.assetname')?.textContent;
+     const before = earlier.get(name);
+     const after = latest.get(name);
+     const liveAsset = live ? liveEntries.find(asset=>asset.name===name) : null;
+     const change = liveAsset ? liveAsset.dailyChange ?? null : after?.dailyChange ?? (before?.pnl != null && after?.pnl != null ? after.pnl-before.pnl : null);
+     const rate = liveAsset ? liveAsset.dailyRate ?? null
+       : after?.dailyRate ?? (change!==null && before?.value>0 ? change/before.value*100 : null);
+     [change,rate].forEach((value,index)=>{
+       const column = index+11;
+       const cell = row.cells[column]?.classList.contains('daily-result') ? row.cells[column] : row.insertCell(column);
+       cell.className = 'num daily-result';
+       cell.textContent = value===null ? '—' : (value>0?'+':'')+(index ? value.toFixed(2)+'%' : value.toLocaleString('zh-CN',{style:'currency',currency:'CNY'}));
+       cell.dataset.sortValue = value ?? '';
+       if (liveAsset?.quoteDate && (index===0 || liveAsset.dailyChange==null) && liveAsset.dailyRate!=null) {
+         const stamp=document.createElement('small');
+         stamp.className='cell-note';
+         stamp.textContent=liveAsset.quoteDate;
+         cell.append(stamp);
+       }
+       if (value) cell.classList.add(value>0?'pos':'neg');
+       cell.title = liveAsset
+         ? (index===0 && liveAsset.dailyRate!=null && liveAsset.qty==null ? '填写持仓份额后可计算收益金额'
+           : liveAsset.dailyRate!=null ? '行情日期 '+liveAsset.quoteDate+' · 较上一交易日'
+           : '暂无可比行情')
+         : prior ? '较 '+prior.date+' 的持仓盈亏变化' : '暂无上一期快照';
+     });
+   }
+   const baseline=[...dailyHistory.values()].sort((a,b)=>a.date.localeCompare(b.date))[0];
+   for (const row of rows) {
+     const name=row.querySelector('.assetname')?.textContent;
+     const reference=baseline?.holdings.find(asset=>asset.name===name);
+     const base=reference?.cost>0 && reference.pnl!=null ? reference.pnl/reference.cost*100 : null;
+     const historical=record?.holdings.find(asset=>asset.name===name);
+     const rate=record ? (historical?.cost>0 && historical.pnl!=null ? historical.pnl/historical.cost*100 : null)
+       : live ? liveEntries.find(asset=>asset.name===name)?.rate : base;
+     const change=rate==null || base==null ? null : rate-base;
+     const cell=row.cells[13]?.classList.contains('baseline-result') ? row.cells[13] : row.insertCell(13);
+     cell.className='num baseline-result';
+     cell.dataset.sortValue=change ?? '';
+     cell.textContent=change===null?'—':(change>0?'+':'')+change.toFixed(2)+'%';
+     if (change) cell.classList.add(change>0?'pos':'neg');
+   }
+   if (sortColumn!==null) rows.sort((a,b)=>{
+     const left=numericCell(a,sortColumn);
+     const right=numericCell(b,sortColumn);
+     if (left===right) return 0;
+     if (left===null) return 1;
+     if (right===null) return -1;
+     return sortDirection==='ascending' ? left-right : right-left;
+   });
+   body.replaceChildren(...rows);
+   applyHoldingColumns();
+   manage.hidden=!live;
+   manage.setAttribute('aria-expanded',String(live && managing));
+   document.getElementById('positionActionsHeading').hidden=!(live && managing);
+   for (const cell of body.querySelectorAll('.position-controls')) cell.hidden=!managing;
+   document.getElementById('marketSubtotal').hidden=!live;
+   hint.textContent=dateInput.value
+     ? (record ? '查看 '+record.date+' 保存的持仓快照。表格中的数据日期为各项行情日期。' : '该日期仅显示已有快照。点「清除日期」返回当前视图。')
+     : useLive()
+     ? '点「操作」可登记买卖、维护参考价和编辑现金。按日期可查看已保存快照。'
+     : snapshotHint;
+   refresh();
+ }
+ mode.addEventListener('change',()=>{if(!endEdit()){mode.value='live';return;} dateInput.value='';previousDate='';showMode();});
+ sortButtons.forEach(button=>button.addEventListener('click',()=>{
+   const column=Number(button.dataset.sortColumn);
+   sortDirection=sortColumn===column && sortDirection==='descending' ? 'ascending' : 'descending';
+   sortColumn=column;
+   sortButtons.forEach(item=>{
+     item.closest('th').setAttribute('aria-sort',item===button?sortDirection:'none');
+     item.querySelector('span').textContent=item===button && sortDirection==='ascending'?'↑':'↓';
+   });
+   showMode();
+ }));
+
+ document.addEventListener('portfolio-market-update',event=>{
+   if (cancelEdit) return;
+   const {entries:updated,editors,saveCash,saveStockTrade}=event.detail;
+   liveEntries=updated;
+   liveRows=liveEntries.map(asset=>{
+     const row=onlineRow(asset);
+     const [,,quantity,price,cost,value,basis,pnl,rate,source,date]=row.cells;
+     const money=new Intl.NumberFormat('zh-CN',{style:'currency',currency:'CNY'});
+     const number=(cell,amount,format)=>{
+       cell.classList.remove('neg','pos');
+       cell.textContent=amount===null?'—':format(amount);
+     };
+     const editor=editors.get(asset.name);
+     number(quantity,asset.qty,x=>String(x)+' '+asset.unit);
+     number(price,asset.price,x=>String(x));
+     number(cost,asset.cost,x=>x.toFixed(4));
+     number(value,asset.value,x=>money.format(x));
+     number(basis,asset.basis ?? null,x=>money.format(x));
+     basis.dataset.sortValue=asset.basis ?? '';
+     number(pnl,asset.pnl,x=>money.format(x));
+     number(rate,asset.rate,x=>x.toFixed(2)+'%');
+     for (const [cell,result] of [[pnl,asset.pnl],[rate,asset.rate]]) {
+       if (result) cell.classList.add(result<0?'neg':'pos');
+     }
+     const sourceName=document.createElement('span');
+     sourceName.className='source-label';
+     sourceName.textContent=asset.source;
+     source.replaceChildren(sourceName);
+     if (asset.remark) {
+       const note=document.createElement('span');
+       note.className='cell-note';
+       note.textContent=asset.remark;
+       source.append(note);
+     }
+     row.dataset.date=asset.date;
+     date.textContent=asset.date||'待更新';
+     const actions=row.insertCell();
+     actions.className='position-controls';
+     const button=(label,run)=>{
+       const control=document.createElement('button');
+       control.type='button';
+       control.className='filter-btn';
+       control.textContent=label;
+       control.onclick=run;
+       return control;
+     };
+     if (asset.group==='cash') {
+       const edit = button('编辑',()=>{
+         if (document.getElementById('refreshMarketTop').disabled || !endEdit()) return;
+         const field = document.createElement('input');
+         Object.assign(field,{type:'number',min:'0',max:'999999999999',step:'0.01',required:true,value:String(asset.value),className:'search holding-editor'});
+         field.setAttribute('aria-label','证券账户可用现金（元）');
+         const restore = () => {
+           cancelEdit=null;
+           number(value,asset.value,x=>money.format(x));
+           actions.replaceChildren(edit);
+           return true;
+         };
+         const save = button('保存',()=>{
+           if (!field.reportValidity()) return;
+           const endCashEdit = cancelEdit;
+           cancelEdit=null;
+           if (saveCash(field.valueAsNumber)) restore();
+           else cancelEdit=endCashEdit;
+           if (field.isConnected) field.setCustomValidity('无法保存现金余额，请重试。');
+           if (field.isConnected) field.reportValidity();
+         });
+         save.hidden=true;
+         field.oninput=()=>{
+           field.setCustomValidity('');
+           save.hidden=field.valueAsNumber===asset.value;
+         };
+         cancelEdit=()=>!save.hidden && !confirm('放弃现金余额修改？') ? false : restore();
+         value.replaceChildren(field);
+         actions.replaceChildren(save,button('取消',restore));
+         field.focus();
+       });
+       actions.append(edit);
+       return row;
+     }
+     const stock = asset.group==='stocks';
+     const gold = asset.group==='gold_acc';
+     if (stock || (asset.qty!==null && Number.isFinite(asset.basis))) {
+       const trade = direction => {
+         if (document.getElementById('refreshMarketTop').disabled || !endEdit()) return;
+         const field = (label,options) => {
+           const input = document.createElement('input');
+           Object.assign(input,{type:'number',required:true,className:'search holding-editor',...options});
+           input.placeholder=label;
+           input.setAttribute('aria-label',label);
+           return input;
+         };
+         const shares = stock
+           ? field('成交股数（100 股一手）',{min:'100',step:'100',max:String(direction<0?asset.qty:999999999-asset.qty)})
+           : field('成交克数',{min:'0.0001',step:'any'});
+         const price=field(stock?'每股成交价（元）':'确认单位净值（元）',{min:'0.0001',step:'any'});
+         const amount=field('成交金额（元）',{min:'0.01',step:'0.01'});
+         const fee=field('交易费用（元，可选）',{min:'0',step:'0.01',required:false});
+         const fields=stock?[shares,price,fee]:gold?[amount,shares]:[amount,price];
+         const restore=()=>{
+           cancelEdit=null;
+           actions.replaceChildren(buy,sell);
+           return true;
+         };
+         const save=button('保存成交',()=>{
+           if (!fields.every(input=>input.reportValidity())) return;
+           const count=stock || gold ? shares.valueAsNumber : Math.round(amount.valueAsNumber/price.valueAsNumber*100)/100;
+           const fees=stock ? fee.valueAsNumber || 0 : 0;
+           const gross=stock ? Math.round(count*price.valueAsNumber*100)/100 : amount.valueAsNumber;
+           const remaining=Math.round((asset.qty+direction*count)*1e8)/1e8;
+           if (!Number.isFinite(asset.basis) || count<=0 || (direction<0 && fees>gross) || remaining<0) {
+             alert('请核对持仓成本、成交数量和成交金额。');
+             return;
+           }
+           const net=direction>0?gross+fees:gross-fees;
+           const basis=remaining===0?0:Math.round((asset.basis+direction*net)*100)/100;
+           const record={date:new Date().toISOString(),side:direction>0?'买入':'卖出',shares:count,price:gold?gross/count:price.valueAsNumber,fees,gross,net,remaining,basis};
+           const currentEdit=cancelEdit;
+           cancelEdit=null;
+           const result=saveStockTrade(editor,record);
+           if (result!==true) {
+             cancelEdit=currentEdit;
+             alert(result || '无法保存成交，请重试。');
+           }
+         });
+         cancelEdit=ask=>ask && fields.some(input=>input.value) && !confirm('放弃这笔成交录入？') ? false : restore();
+         actions.replaceChildren(...fields,save,button('取消',restore));
+         fields[0].focus();
+       };
+       const buy=button('买入',()=>trade(1));
+       const sell=button('卖出',()=>trade(-1));
+       sell.disabled=stock?asset.qty<100:asset.qty<=0;
+       actions.append(buy,sell,button('编辑资料',()=>event.detail.editHolding(asset)));
+       return row;
+     }
+     function restore() {
+       number(quantity,asset.qty,x=>String(x)+' '+asset.unit);
+       number(basis,asset.basis ?? null,x=>money.format(x));
+       actions.replaceChildren(edit,remove);
+       cancelEdit=null;
+     }
+     const edit=button('编辑',()=>{
+       if(document.getElementById('refreshMarketTop').disabled || !endEdit()) return;
+       const original=[editor.input.value,editor.basis.value];
+       const startingBasis=editor.savedBasis();
+       const changed=()=>editor.input.value!==original[0] || editor.basis.value!==original[1];
+       const save=button('保存',()=>{
+         if(!editor.input.reportValidity() || !editor.basis.reportValidity()) return;
+         for(const field of [editor.input,editor.basis]) field.removeEventListener('input',update);
+         cancelEdit=null;
+         editor.commit(editor.input.value,editor.savedBasis());
+       });
+       const cancel=button('取消',()=>cancelEdit(false));
+       const done=button('结束编辑',()=>cancelEdit(false));
+       const update=()=>{ save.hidden=cancel.hidden=!changed(); done.hidden=changed(); };
+       for(const field of [editor.input,editor.basis]) field.addEventListener('input',update);
+       cancelEdit=confirmDiscard=>{
+         if(confirmDiscard && changed() && !confirm('取消这行尚未保存的修改？')) return false;
+         editor.reset(original[0],startingBasis,original[1]);
+         for(const field of [editor.input,editor.basis]) field.removeEventListener('input',update);
+         restore();
+         return true;
+       };
+       quantity.replaceChildren(editor.input,' '+asset.unit);
+       basis.replaceChildren(editor.basis);
+       actions.replaceChildren(save,cancel,done);
+       update();
+       editor.input.focus();
+     });
+     const remove=button('清空持仓',()=>{
+       if(!endEdit() || !confirm('将「'+asset.name+'」的动态持仓数量设为 0？')) return;
+       editor.commit('0',editor.savedBasis());
+     });
+     actions.append(edit,remove);
+     return row;
+   });
+   document.getElementById('holdingModeControl').hidden=false;
+   showMode();
+ });
+ filterButtons.forEach(btn=>btn.addEventListener('click',()=>{filter=btn.dataset.filter; filterButtons.forEach(b=>b.classList.toggle('active',b===btn));refresh();}));
+ input.addEventListener('input',refresh);
+ let previousDate = '';
+ dateInput.addEventListener('input',()=>{
+   if (!endEdit()) { dateInput.value=previousDate; return; }
+   previousDate=dateInput.value;
+   showMode();
+ });
+ document.addEventListener('portfolio-history-updated',event=>{
+   dailyHistory = new Map(event.detail.map(record=>[record.date,record]));
+   if (!cancelEdit) showMode();
+ });
+ document.getElementById('clearHoldingDate').addEventListener('click',()=>{dateInput.value='';previousDate='';showMode();});
+ showMode();
+ document.querySelectorAll('.source-shot img').forEach(img=>img.addEventListener('click',()=>img.classList.toggle('zoom')));
+ function csvEsc(v){let s=(v===null||v===undefined)?'':String(v);if(typeof v==='string' && /^[\s]*[=+@-]/.test(s)) s="'"+s;return '"'+s.replaceAll('"','""')+'"';}
+ document.getElementById('exportCsv').addEventListener('click',()=>{
+   const header=['账户','资产名称','分类','数量','参考现价','参考成本价','当前市值元','持仓盈亏元','持仓盈亏率百分比','数据来源','备注'];
+   const history=selectedHistory();
+   const records=(history ? history.holdings.map(holding=>{
+     const original=entries.find(item=>item.name===holding.name);
+     return {...original,...holding,group:holding.category,cost:holding.qty>0 && holding.cost!==null ? holding.cost/holding.qty : null,
+       rate:holding.cost>0 && holding.pnl!==null ? holding.pnl/holding.cost*100 : null,remark:holding.marketDate};
+   }) : useLive()?liveEntries:dateInput.value && !snapshotRows.some(row=>row.dataset.date===dateInput.value)?[]:entries).map(x=>[x.acct,x.name,x.group,x.qty,x.price,x.cost,x.value,x.pnl,x.rate,x.source,x.remark]);
+   const content='﻿'+[header,...records].map(r=>r.map(csvEsc).join(',')).join('\r\n');
+   const blob=new Blob([content],{type:'text/csv;charset=utf-8;'});const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download=history?'个人投资持仓明细_'+history.date+'.csv':useLive()?'个人投资持仓明细_动态.csv':'个人投资持仓明细_原始快照.csv';document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1000);
+ });
+})();
+</script>
+<script>
+(() => {
+  const byId = id => document.getElementById(id);
+  const storageKey = 'investment-panorama-online-history-v2';
+  const groups = {stocks:'stocks', gold_etf:'gold', gold_acc:'gold', other_fund:'funds', cash:'cash'};
+  const labels = {stocks:'股票', gold:'直接黄金', funds:'非黄金基金', cash:'现金'};
+  const dimensions = {
+    quality:'企业质量 · 商业模式、竞争优势、盈利能力',
+    finance:'财务健康度 · 营收、净利润、现金流、债务',
+    valuation:'估值合理性 · PE、PB、历史估值、行业对比',
+    growth:'成长前景 · 行业周期、市场空间、盈利增长',
+    risk:'持仓风险 · 单股占比、行业集中度、波动',
+    thesis:'投资逻辑 · 持有理由及其成立条件'
+  };
+  const decisions = ['待观察','继续持有','考虑减仓','考虑退出'];
+  const types = ['定期评估','周度市场观察','季度基本面更新','实际加仓','实际减仓','实际退出'];
+  const triggers = ['无','基本面恶化','风险严重集中','长期跑输基准','经理或策略变化','黄金周期或配置变化','其他'];
+  const classify = entry => ({...entry, category:groups[entry.group], id:entry.acct + '/' + entry.name});
+  let assets = entries.map(classify);
+  const money = new Intl.NumberFormat('zh-CN',{style:'currency',currency:'CNY'});
+  const pct = value => value.toFixed(2) + '%';
+  const fmt = value => money.format(value);
+  let total = assets.reduce((sum, asset) => sum + asset.value, 0);
+  const weight = value => total > 0 ? value / total * 100 : 0;
+  const sum = (items, field) => items.reduce((value, asset) => value + (asset[field] ?? 0), 0);
+  const byCategory = category => assets.filter(asset => asset.category === category);
+  const stateDefaults = () => ({version:2, limits:{single:15, gold:25, cash:10}, reviews:{}, snapshots:[], dailyHistory:[]});
+  const status = message => { byId('reviewStatus').textContent = message; };
+  const dateOk = value => typeof value === 'string' && /^\d{4}-\d{2}-\d{2}$/.test(value) &&
+    !Number.isNaN(Date.parse(value)) && new Date(value).toISOString().slice(0,10) === value;
+  const textOk = value => typeof value === 'string' && value.length <= 12000;
+  const fieldNames = ['topic','changes','logic','reason','detail'];
+  const dateFields = ['date','next'];
+  const dimensionFields = Object.keys(dimensions).flatMap(key => [key, key+'Date', key+'Source']);
+  function validRecord(record) {
+    return record && typeof record.id === 'string' && /^[a-z0-9-]+$/i.test(record.id) &&
+      dateOk(record.date) && (record.next === '' || dateOk(record.next)) &&
+      decisions.includes(record.decision) && types.includes(record.type) && triggers.includes(record.trigger) &&
+      [...fieldNames,...dimensionFields].every(field => textOk(record[field])) &&
+      Object.keys(dimensions).every(key => record[key+'Date'] === '' || dateOk(record[key+'Date']));
+  }
+  function validate(data) {
+    if (![1,2].includes(data?.version) || !data.limits || !data.reviews || Array.isArray(data.reviews) ||
+        !Array.isArray(data.snapshots) || (data.version===2 && !Array.isArray(data.dailyHistory))) throw Error('备份格式无效');
+    const limits = {};
+    for (const key of ['single','gold','cash']) {
+      const value = data.limits[key];
+      if (!Number.isFinite(value) || value < (key === 'cash' ? 0 : 1) || value > 100) throw Error('风险阈值无效');
+      limits[key] = value;
+    }
+    const reviews = Object.create(null);
+    for (const [id, list] of Object.entries(data.reviews)) {
+      if (!Array.isArray(list) || !list.every(validRecord) ||
+          new Set(list.map(record => record.id)).size !== list.length) throw Error('评估记录无效');
+      reviews[id] = list;
+    }
+    const dates = new Set();
+    for (const snapshot of data.snapshots) {
+      if (!snapshot || !dateOk(snapshot.date) || dates.has(snapshot.date) ||
+          !Number.isFinite(snapshot.value) || snapshot.value < 0 || snapshot.value > 999999999999) throw Error('历史快照无效');
+      dates.add(snapshot.date);
+    }
+    const dailyHistory = data.version===2 ? data.dailyHistory.map(record=>{
+      if (!Array.isArray(record?.holdings)) return record;
+      return {...record,holdings:record.holdings.map(holding=>holding ? {
+        ...holding,category:holding.category ?? entries.find(asset=>asset.name===holding.name)?.group ?? '',
+        qty:holding.qty ?? null,price:holding.price ?? null
+      } : holding)};
+    }) : [];
+    const historyDates = new Set();
+    for (const record of dailyHistory) {
+      if (!record || !dateOk(record.date) || historyDates.has(record.date) ||
+          !Number.isFinite(record.total) || record.total < 0 || record.total > 999999999999 ||
+          !Array.isArray(record.holdings) || record.holdings.length > 100) throw Error('每日持仓历史无效');
+      historyDates.add(record.date);
+      for (const holding of record.holdings) {
+        if (!holding || typeof holding.name!=='string' || holding.name.length>120 ||
+            typeof holding.category!=='string' || (holding.qty!==null && (!Number.isFinite(holding.qty)||holding.qty<0)) ||
+            (holding.price!==null && (!Number.isFinite(holding.price)||holding.price<0)) ||
+            !Number.isFinite(holding.value) || holding.value<0 ||
+            (holding.cost!==null && !Number.isFinite(holding.cost)) ||
+            (holding.pnl!==null && !Number.isFinite(holding.pnl)) || typeof holding.marketDate!=='string' ||
+            typeof holding.source!=='string') throw Error('每日持仓历史项目无效');
+      }
+    }
+    return {version:2, limits, reviews, snapshots:data.snapshots, dailyHistory};
+  }
+  let state = stateDefaults();
+  let storageReadable = true;
+  try {
+    const saved = localStorage.getItem(storageKey);
+    if (saved) state = validate(JSON.parse(saved));
+    else {
+      const legacy=JSON.parse(localStorage.getItem('investment-panorama-online-v1') || 'null');
+      if (Array.isArray(legacy?.snapshots)) {
+        const totals=new Map(legacy.snapshots.filter(item=>item && dateOk(item.date) &&
+          Number.isFinite(item.total) && item.total>=0).map(item=>[item.date,{date:item.date,value:item.total}]));
+        state=validate({...state,snapshots:[...totals.values()]});
+      }
+    }
+  } catch {
+    storageReadable = false;
+    status('无法读取本地记录。新记录可通过 JSON 导出保存。');
+  }
+  function save(next, message) {
+    state = next;
+    try {
+      if (!storageReadable) throw Error();
+      localStorage.setItem(storageKey, JSON.stringify(state));
+      status(message);
+      return true;
+    } catch {
+      status(message + ' 浏览器未能持久保存，请导出 JSON 备份。');
+      return false;
+    }
+  }
+
+  function element(tag, text, className) {
+    const el = document.createElement(tag);
+    if (text !== undefined) el.textContent = text;
+    if (className) el.className = className;
+    return el;
+  }
+  function listItem(list, text, warning = false) {
+    list.append(element('li', text, warning ? 'v2-warning' : ''));
+  }
+  function concentration() {
+    return assets.filter(asset => asset.category !== 'cash' && weight(asset.value) >= state.limits.single);
+  }
+  function renderRisk() {
+    const metrics = byId('riskMetrics');
+    metrics.replaceChildren();
+    const addMetric = (name, figure, caption, color = '') => {
+      const box = element('article', undefined, 'card metric');
+      box.append(element('div', name, 'mini-label'), element('div', figure, 'mini-number ' + color), element('div', caption, 'hint'));
+      metrics.append(box);
+    };
+    for (const [category, label] of Object.entries(labels)) {
+      const items = byCategory(category);
+      const value = sum(items,'value');
+      addMetric(label, pct(weight(value)), fmt(value));
+    }
+    const stockAssets=byCategory('stocks');
+    const fundAssets=assets.filter(asset => ['gold_etf','other_fund'].includes(asset.group));
+    const stockPnl = sum(stockAssets,'pnl');
+    const fundPnl = sum(fundAssets,'pnl');
+    const pnlColor = value => value < 0 ? 'neg' : value > 0 ? 'pos' : '';
+    const goldAssets=byCategory('gold');
+    const knownGold=goldAssets.filter(asset=>asset.pnl!==null);
+    const goldPnl=knownGold.length ? sum(knownGold,'pnl') : null;
+    addMetric('黄金持仓总盈亏', goldPnl===null?'待更新':fmt(goldPnl),
+      knownGold.length===goldAssets.length?'含积存金及黄金 ETF 联接基金':'已知金额小计，部分成本待补录',
+      pnlColor(goldPnl));
+    addMetric('股票持仓浮动盈亏', fmt(stockPnl), stockAssets.some(asset=>asset.pnl===null)?'已知持仓盈亏小计':'按总览数据汇总', pnlColor(stockPnl));
+    addMetric('基金持仓浮动盈亏', fmt(fundPnl), fundAssets.some(asset=>asset.pnl===null)?'已知持仓盈亏小计（含黄金基金）':'含黄金 ETF 联接基金', pnlColor(fundPnl));
+    const notes = byId('riskNotes');
+    notes.replaceChildren();
+    const concentrated = concentration();
+    listItem(notes, concentrated.length ? '单只风险资产集中 · ' +
+      concentrated.map(asset => asset.name + ' ' + pct(weight(asset.value))).join('、') :
+      '单只风险资产均低于所设提醒阈值。', concentrated.length > 0);
+    const gold = weight(sum(byCategory('gold'),'value'));
+    listItem(notes, '直接黄金 ' + pct(gold) + '（积存金及黄金 ETF 联接基金）。' +
+      (gold >= state.limits.gold ? ' 已达到黄金集中度提醒阈值。' : ''), gold >= state.limits.gold);
+    listItem(notes, '行业与主题可能重叠，可结合基金底层持仓复核。');
+    const cash = weight(sum(byCategory('cash'),'value'));
+    listItem(notes, '现金占 ' + pct(cash) + (cash < state.limits.cash ? '，低于所设现金比例阈值。' : '，达到所设现金比例阈值。'), cash < state.limits.cash);
+  }
+  const ordered = records => [...records].sort((a,b) => b.date.localeCompare(a.date) || b.id.localeCompare(a.id));
+  function renderDiscipline() {
+    const stock = byId('stockSignals');
+    const fund = byId('fundSignals');
+    const gold = byId('goldSignals');
+    [stock,fund,gold].forEach(list => list.replaceChildren());
+    const concentrated = new Set(concentration().map(asset => asset.id));
+    for (const asset of assets) {
+      const latest = ordered(state.reviews[asset.id] ?? []).find(record => record.trigger !== triggers[0]);
+      let signal = '';
+      const risk = concentrated.has(asset.id) || latest?.trigger === '风险严重集中';
+      if (asset.category === 'stocks') {
+        if (!asset.fallback && asset.rate >= 5) signal = '达到 +5%，启动正式评估';
+        else if (asset.rate === null) signal = '暂无可靠收益率，待人工评估';
+        if (risk || latest?.trigger === '基本面恶化') signal += (signal ? '；' : '') + '可提前评估';
+        if (signal) listItem(stock, asset.name + ' · ' + signal, !asset.fallback && asset.rate >= 5 || risk || latest?.trigger === '基本面恶化');
+      }
+      if (asset.category === 'funds') {
+        if (!asset.fallback && asset.rate !== null && asset.rate >= 0) signal = '已回本，复核退出条件';
+        else if (!asset.fallback && asset.rate !== null && asset.rate >= -5) signal = '亏损在 5% 以内，启动退出评估';
+        if (['长期跑输基准','经理或策略变化'].includes(latest?.trigger)) signal += (signal ? '；' : '') + '可提前评估';
+        if (signal) listItem(fund, asset.name + ' · ' + signal, true);
+      }
+      if (asset.category === 'gold' && latest?.trigger === '黄金周期或配置变化') listItem(gold, asset.name + ' · 人工标记周期或配置变化', true);
+    }
+    if (!stock.children.length) listItem(stock,'当前可用持仓收益率暂无股票评估提醒。');
+    if (!fund.children.length) listItem(fund,'当前可用持仓收益率暂无非黄金基金提醒。');
+    const goldWeight = weight(sum(byCategory('gold'),'value'));
+    if (goldWeight >= state.limits.gold) listItem(gold,'直接黄金 ' + pct(goldWeight) + '，达到配置复核阈值。', true);
+    if (!gold.children.length) listItem(gold,'当前配置低于提醒阈值。');
+  }
+  function renderSnapshots() {
+    const byDate = new Map(state.dailyHistory.map(item => [item.date,{date:item.date,value:item.total,automatic:true}]));
+    for (const item of state.snapshots) byDate.set(item.date,item);
+    const snapshots = [...byDate.values()].sort((a,b)=>b.date.localeCompare(a.date));
+    renderDailyTrend();
+    const chronological = [...state.dailyHistory].sort((a,b)=>a.date.localeCompare(b.date));
+    document.dispatchEvent(new CustomEvent('portfolio-history-updated',{detail:chronological}));
+    onlineBaseline = chronological[0] ?? null;
+    document.dispatchEvent(new CustomEvent('portfolio-baseline-updated',{detail:onlineBaseline}));
+    const list = byId('snapshotList');
+    list.replaceChildren();
+    snapshots.forEach(item => listItem(list, item.date + ' · ' + fmt(item.value) + (item.date === chronological[0]?.date ? ' · 原始快照' : item.automatic ? ' · 持仓快照' : ' · 总资产记录')));
+    let peak = 0;
+    let drawdown = 0;
+    for (const item of [...snapshots].reverse()) {
+      peak = Math.max(peak,item.value);
+      if (peak > 0) drawdown = Math.max(drawdown,(peak-item.value)/peak*100);
+    }
+    byId('snapshotStats').textContent = '已录入 ' + snapshots.length + ' 期 · 历史最高账户价值 ' +
+      (snapshots.length >= 2 ? fmt(peak) : '待更新') + ' · 最大回撤 ' +
+      (snapshots.length >= 3 && peak > 0 ? pct(drawdown) : '暂无足够历史数据');
+    const historyRows=byId('dailyHistoryRows');
+    historyRows.replaceChildren();
+    byId('dailyHistoryEmpty').hidden=state.dailyHistory.length>0;
+    for (const record of [...state.dailyHistory].sort((a,b)=>b.date.localeCompare(a.date))) {
+      for (const holding of record.holdings) {
+        const row=document.createElement('tr');
+        const values=[record.date,holding.name,holding.qty===null?'—':String(holding.qty),holding.price===null?'—':fmt(holding.price),fmt(holding.value),holding.cost===null?'—':fmt(holding.cost),holding.pnl===null?'—':fmt(holding.pnl),(holding.marketDate||'日期待更新')+(holding.source?' · '+holding.source:'')];
+        values.forEach((value,index)=>{const cell=document.createElement('td');cell.textContent=value;if(index>=2&&index<=6)cell.className='num';row.append(cell);});
+        historyRows.append(row);
+      }
+    }
+  }
+  document.addEventListener('pointerdown',event=>{
+    const canvas = byId('dailyTrend');
+    if (!canvas.contains(event.target)) byId('dailyTrendTip').hidden = true;
+  },true);
+  document.addEventListener('keydown',event=>{
+    if (event.key==='Escape') byId('dailyTrendTip').hidden = true;
+  });
+  function renderDailyTrend() {
+    const records = [...state.dailyHistory].sort((a,b)=>a.date.localeCompare(b.date));
+    const canvas = byId('dailyTrend');
+    const caption = byId('dailyTrendCaption');
+    const points = records.map(record => ({
+      date:record.date,
+      value:record.holdings.reduce((sum, holding)=>sum+(holding.pnl ?? 0),0)
+    }));
+    const totals = records.map(record=>{
+      const capital = Number.isFinite(record.capital) ? record.capital :
+        record.holdings.reduce((sum,item)=>sum+(item.cost ?? 0),0);
+      return capital>0 ? {pnl:record.total-capital,rate:(record.total-capital)/capital*100} : null;
+    });
+    const rateAt = index => totals[index] && totals[index-1] ? totals[index].rate-totals[index-1].rate : null;
+    const signed = (value,format) => value===null ? '暂无可比数据' : (value>0?'+':'')+format(value);
+    const tip = byId('dailyTrendTip');
+    tip.hidden = true;
+    const comparisons = byId('dailyChanges');
+    comparisons.replaceChildren();
+    for (let i = points.length - 1; i > 0; i--) {
+      const change = points[i].value - points[i-1].value;
+      const row = element('li',points[i].date + ' 较 ' + points[i-1].date + ' · ' + (change > 0 ? '+' : '') + fmt(change));
+      row.classList.toggle('pos',change > 0);
+      row.classList.toggle('neg',change < 0);
+      comparisons.append(row);
+    }
+    canvas.hidden = points.length < 2;
+    caption.textContent = '至少两天的刷新记录才显示趋势。';
+    if (canvas.hidden) return;
+    const latest = points.at(-1);
+    const previous = points.at(-2);
+    const change = latest.value - previous.value;
+    caption.textContent = latest.date + ' 较 ' + previous.date + ' · 持仓盈亏变化 ' +
+      (change > 0 ? '+' : '') + fmt(change) + ' · 按已知成本汇总，交易也会影响变化。';
+    const ctx = canvas.getContext('2d');
+    const low = Math.min(...points.map(point=>point.value));
+    const high = Math.max(...points.map(point=>point.value));
+    const span = high-low || 1;
+    ctx.clearRect(0,0,740,200);
+    ctx.strokeStyle = '#d5ae76';
+    ctx.lineWidth = 3;
+    ctx.beginPath();
+    const day = point => Date.parse(point.date);
+    const coordinates = points.map((point,index)=>{
+      const x = 16 + (day(point)-day(points[0]))/(day(latest)-day(points[0]))*708;
+      const y = 24 + (high-point.value)/span*128;
+      if (index === 0) ctx.moveTo(x,y);
+      else ctx.lineTo(x,y);
+      return {x,y};
+    });
+    ctx.stroke();
+    ctx.fillStyle = '#d5ae76';
+    for (const {x,y} of coordinates) {
+      ctx.beginPath();
+      ctx.arc(x,y,4,0,Math.PI*2);
+      ctx.fill();
+    }
+    canvas.style.cursor = 'pointer';
+    canvas.onclick = event => {
+      const bounds = canvas.getBoundingClientRect();
+      const x = (event.clientX-bounds.left)*canvas.width/bounds.width;
+      const nearest = coordinates.reduce((best,point,index)=>
+        Math.abs(point.x-x)<Math.abs(coordinates[best].x-x) ? index : best,0);
+      const point = coordinates[nearest];
+      const y = (event.clientY-bounds.top)*canvas.height/bounds.height;
+      if (Math.hypot((x-point.x)*bounds.width/canvas.width,(y-point.y)*bounds.height/canvas.height)>18) {
+        tip.hidden = true;
+        return;
+      }
+      tip.textContent = points[nearest].date + '\n账户累计收益率 ' + signed(totals[nearest]?.rate ?? null,pct) +
+        '\n当期变化 ' + signed(rateAt(nearest),v=>v.toFixed(2)+'%') +
+        '\n今日证券涨跌 ' + byId('overviewTodayRate').textContent;
+      tip.hidden = false;
+      tip.style.left = Math.max(0,Math.min(point.x/canvas.width*bounds.width+9,bounds.width-tip.offsetWidth))+'px';
+      tip.style.top = Math.max(0,point.y/canvas.height*bounds.height-tip.offsetHeight-8)+'px';
+    };
+    ctx.fillStyle = getComputedStyle(caption).color;
+    ctx.font = '14px system-ui';
+    ctx.fillText(points[0].date+' · 原始快照',16,186);
+    ctx.textAlign = 'right';
+    ctx.fillText(latest.date,724,186);
+    ctx.textAlign = 'left';
+  }
+  function portfolioDate(now) {
+    const parts = Object.fromEntries(new Intl.DateTimeFormat('en',{timeZone:'Asia/Shanghai',year:'numeric',month:'2-digit',day:'2-digit'}).formatToParts(now).map(({type,value})=>[type,value]));
+    return [parts.year,parts.month,parts.day].join('-');
+  }
+  function saveDailyHistory(entries,eventCapital) {
+    if (!entries?.length) return;
+    const now=new Date();
+    const date = portfolioDate(now);
+    const holdings=entries.map(asset=>({
+      name:asset.name,category:asset.group,qty:asset.qty,price:asset.price,value:asset.value,
+      cost:asset.basis,pnl:asset.pnl,marketDate:asset.date||'',source:asset.source||'手动录入',
+      code:asset.code,acct:asset.acct,dailyRate:asset.dailyRate,dailyChange:asset.dailyChange
+    }));
+    const total=holdings.reduce((sum,item)=>sum+item.value,0);
+    const capital=eventCapital;
+    const dailyHistory=[...state.dailyHistory.filter(record=>record.date!==date),
+      {date,capturedAt:now.toISOString(),total,capital,holdings}].sort((a,b)=>a.date.localeCompare(b.date));
+    save({...state,dailyHistory},'今日行情与持仓快照已保存。');
+    renderSnapshots();
+  }
+  document.addEventListener('portfolio-daily-history',event=>saveDailyHistory(event.detail?.entries,event.detail?.capital));
+  function fillLimits() {
+    for (const [key,value] of Object.entries(state.limits)) byId('riskLimits').elements[key].value = value;
+  }
+  byId('riskLimits').addEventListener('submit',event => {
+    event.preventDefault();
+    const limits = Object.fromEntries([...new FormData(event.target)].map(([key,value]) => [key,Number(value)]));
+    const persisted = save({...state,limits},'风险阈值已更新。');
+    renderRisk();
+    renderDiscipline();
+    alert(persisted ? '风险阈值已更新。' : '风险阈值已更新。请导出备份以保留变更。');
+  });
+  byId('snapshotForm').addEventListener('submit',event => {
+    event.preventDefault();
+    const {date,value} = Object.fromEntries(new FormData(event.target));
+    try {
+      const next = validate({...state,snapshots:[...state.snapshots,{date,value:Number(value)}]});
+      const persisted = save(next,'历史快照已添加。');
+      event.target.reset();
+      renderSnapshots();
+      if (!persisted) alert('历史快照已添加。请导出备份以保留变更。');
+    } catch (error) {
+      alert(error.message + '。每个日期只保留一条快照。');
+    }
+  });
+
+  const dateToday = () => new Intl.DateTimeFormat('sv-SE').format(new Date());
+  function addField(parent, name, title, type = 'text', choices = []) {
+    const label = element('label', title, type === 'textarea' ? 'v2-wide' : '');
+    const input = element(type === 'textarea' || type === 'select' ? type : 'input');
+    if (input.tagName === 'INPUT') input.type = type;
+    input.name = name;
+    if (type === 'text' || type === 'textarea') input.maxLength = 12000;
+    for (const option of choices) input.add(new Option(option,option));
+    label.append(input);
+    parent.append(label);
+    return input;
+  }
+  function assetCard(asset) {
+    const card = element('details', undefined, 'card metric v2-review');
+    card.dataset.category = asset.category;
+    const summary = element('summary');
+    const meta = element('small');
+    summary.append(element('strong',asset.name), meta);
+    const rate = asset.rate === null ? '暂无可靠持仓收益率' : '持仓收益率 ' + pct(asset.rate);
+    const line = element('p', '市值 ' + fmt(asset.value) + ' · 占比 ' + pct(weight(asset.value)));
+    if (asset.category !== 'cash') line.append(' · ',element('span',rate,asset.rate < 0 ? 'neg' : asset.rate > 0 ? 'pos' : 'muted'));
+    const form = element('form', undefined, 'v2-fields');
+    addField(form,'date','记录日期','date').required = true;
+    const note = addField(form,'detail','记录','textarea');
+    note.placeholder = '写下你的观察、操作或想法';
+    note.required = true;
+    const submit = element('button','保存为新记录','btn dark');
+    const reset = element('button','新建记录','btn');
+    reset.type = 'button';
+    form.append(submit,reset);
+    const history = element('div');
+    const feedback = element('p',undefined,'v2-status');
+    feedback.setAttribute('role','status');
+    card.append(summary,line,form,feedback,history);
+    let editing = '';
+    function fill(record, edit = false) {
+      form.reset();
+      for (const input of form.querySelectorAll('[name]')) {
+        if (record && Object.hasOwn(record,input.name)) input.value = record[input.name];
+      }
+      if (!edit) {
+        form.elements.date.value = dateToday();
+        form.elements.detail.value = '';
+      }
+      editing = edit ? record.id : '';
+      submit.textContent = edit ? '保存修改' : '保存为新记录';
+    }
+    function refreshHistory() {
+      const records = ordered(state.reviews[asset.id] ?? []);
+      meta.textContent = records.length ? '最近记录 · ' + records[0].date : '暂无记录';
+      history.replaceChildren(element('h3', '历史记录 · ' + records.length));
+      for (const record of records) {
+        const detail = element('details',undefined,'v2-history');
+        detail.append(element('summary', record.date + (record.type === types[0] ? '' : ' · ' + record.type)));
+        const text = [
+          ['观察方向',record.topic], ['下次复核',record.next], ['评估事由',record.trigger === '无' ? '' : record.trigger],
+          ['基本面或市场变化',record.changes], ['持有逻辑',record.logic], ['决定理由',record.reason], ['',record.detail]
+        ];
+        if (asset.category === 'stocks') for (const [key,title] of Object.entries(dimensions)) {
+          text.push([title,[record[key],record[key+'Date'],record[key+'Source']].filter(Boolean).join(' · ') ]);
+        }
+        const content = element('div',text.filter(([,value]) => value).map(([label,value]) => (label ? label + ' · ' : '') + value).join('\n'));
+        const edit = element('button','编辑此记录','btn v2-edit');
+        edit.type = 'button';
+        edit.addEventListener('click',() => { fill(record,true); form.elements.date.focus(); });
+        detail.append(content,edit);
+        history.append(detail);
+      }
+    }
+    reset.addEventListener('click',() => fill());
+    form.addEventListener('submit',event => {
+      event.preventDefault();
+      const fields = Object.fromEntries(new FormData(form));
+      const empty = Object.fromEntries([...fieldNames,...dateFields,...dimensionFields].map(key => [key,'']));
+      const id = editing || Date.now().toString(36) + '-' + Math.random().toString(36).slice(2);
+      fields.detail = fields.detail.trim();
+      if (!fields.detail) {
+        feedback.textContent = '请填写记录内容。';
+        return;
+      }
+      const previous = (state.reviews[asset.id] ?? []).find(item => item.id === editing);
+      const record = {...empty, type:types[0], decision:decisions[0], trigger:triggers[0], ...previous, ...fields, id};
+      if (!validRecord(record)) {
+        feedback.textContent = '请核对记录日期和分析字段。';
+        return;
+      }
+      const list = (state.reviews[asset.id] ?? []).filter(item => item.id !== id);
+      const persisted = save({...state,reviews:{...state.reviews,[asset.id]:[...list,record]}},'持仓记录已保存。');
+      feedback.textContent = persisted ? '记录已保存。' : '记录暂存于本页，请导出 JSON。';
+      refreshHistory();
+      renderDiscipline();
+      fill();
+    });
+    fill();
+    refreshHistory();
+    return card;
+  }
+  function filterCards() {
+    const filter = byId('reviewFilter').value;
+    for (const card of byId('reviewCards').children) card.hidden = filter !== 'all' && card.dataset.category !== filter;
+  }
+  function renderCards() {
+    byId('reviewCards').replaceChildren(...assets.map(assetCard));
+    filterCards();
+  }
+  byId('reviewFilter').addEventListener('change',filterCards);
+  byId('downloadReviews').addEventListener('click',() => {
+    const blob = new Blob([JSON.stringify({...state,portfolio:window.onlinePortfolio.export()},null,2)],{type:'application/json'});
+    const url = URL.createObjectURL(blob);
+    const link = element('a');
+    link.href = url;
+    link.download = '投资全景账本备份_' + dateToday() + '.json';
+    document.body.append(link);
+    link.click();
+    link.remove();
+    setTimeout(() => URL.revokeObjectURL(url),1000);
+  });
+  byId('uploadReviews').addEventListener('click',() => byId('reviewFile').click());
+  byId('reviewFile').addEventListener('change',async event => {
+    const input = event.target;
+    const file = input.files[0];
+    if (!file) return;
+    try {
+      if (file.size>5_000_000) throw Error('备份文件过大');
+      const raw = JSON.parse(await file.text());
+      const incoming = validate(raw);
+      const portfolio = raw.portfolio ? window.onlinePortfolio.validate(raw.portfolio) : null;
+      if (portfolio && window.onlinePortfolio.hasData() &&
+          !confirm('导入会替换当前持仓、现金及成交记录。历史快照和记录将按日期合并。确认导入？')) return;
+      const reviews = {...state.reviews};
+      let conflicts = 0;
+      for (const [id,list] of Object.entries(incoming.reviews)) {
+        const existing = new Map((reviews[id] ?? []).map(record => [record.id,record]));
+        for (const record of list) {
+          const known = existing.get(record.id);
+          if (!known) existing.set(record.id,record);
+          else if (JSON.stringify(known) !== JSON.stringify(record)) conflicts++;
+        }
+        Object.defineProperty(reviews,id,{value:[...existing.values()],enumerable:true,configurable:true,writable:true});
+      }
+      const snapshots = new Map(state.snapshots.map(item => [item.date,item]));
+      for (const item of incoming.snapshots) {
+        const known = snapshots.get(item.date);
+        if (!known) snapshots.set(item.date,item);
+        else if (known.value !== item.value) conflicts++;
+      }
+      const dailyHistory = new Map(state.dailyHistory.map(item=>[item.date,item]));
+      for (const item of incoming.dailyHistory) {
+        const known=dailyHistory.get(item.date);
+        if (!known) dailyHistory.set(item.date,item);
+        else if (JSON.stringify(known)!==JSON.stringify(item)) conflicts++;
+      }
+      const next = validate({...incoming,reviews,snapshots:[...snapshots.values()],dailyHistory:[...dailyHistory.values()]});
+      if (portfolio) window.onlinePortfolio.restore(portfolio);
+      save(next,'备份已合并，风险阈值使用备份设置。' + (conflicts ? '保留本地版本的冲突项 ' + conflicts + ' 条。' : ''));
+      render();
+    } catch (error) {
+      status('导入失败 · ' + error.message);
+    } finally {
+      input.value = '';
+    }
+  });
+  function render() {
+    fillLimits();
+    renderRisk();
+    renderSnapshots();
+    renderDiscipline();
+    renderCards();
+  }
+  document.addEventListener('portfolio-market-update',event=>{
+    assets=event.detail.entries.map(classify);
+    total=sum(assets,'value');
+    byId('riskPricingNote').textContent=event.detail.hasMarket?'动态行情与本地录入。':'按本地录入估值。';
+    renderRisk();
+    renderDiscipline();
+    renderCards();
+  });
+  render();
+})();
+</script><script>
+(() => {
+  const overview = document.getElementById('overview');
+  const accounts = document.getElementById('accounts');
+  const currency = new Intl.NumberFormat('zh-CN',{style:'currency',currency:'CNY'});
+  const money = value => value === null ? '待补录成本' : currency.format(value);
+  const pct = value => value === null ? '—' : value.toFixed(2)+'%';
+  function setFinancial(cell, value, format=money) {
+    cell.textContent = format(value);
+    cell.classList.toggle('neg',value !== null && value < 0);
+    cell.classList.toggle('pos',value !== null && value > 0);
+  }
+  const groupNames = ['stocks','gold_acc','gold_etf','other_fund','cash'];
+  const colors = ['#354cb6','#c5a46f','#e0bd87','#7a82a1','#78baa0'];
+  let originalSnapshot = onlineBaseline;
+  let lastDetail = null;
+  const sum = (items,field) => items.some(item => item[field] === null)
+    ? null : items.reduce((value,item) => value+item[field],0);
+  function account(value, capital) {
+    const pnl = capital === null ? null : value-capital;
+    return {value,capital,pnl,rate:capital>0 ? pnl/capital*100 : null};
+  }
+  function update(detail) {
+    lastDetail=detail;
+    const assets = detail.entries;
+    const total = sum(assets,'value');
+    const share = value => total > 0 ? value/total*100 : 0;
+    const group = code => assets.filter(asset=>asset.group===code);
+    const values = groupNames.map(code=>sum(group(code),'value'));
+    const [stocks,goldAccount,goldFunds,otherFunds,cash] = values;
+    const goldTotal = goldAccount+goldFunds;
+    const twoStocks = sum(group('stocks').sort((a,b)=>b.value-a.value).slice(0,2),'value');
+    document.getElementById('weeklyGold').textContent=pct(share(goldTotal));
+    document.getElementById('weeklyConcentration').textContent=pct(share(goldTotal+twoStocks));
+    document.getElementById('weeklyCash').textContent=money(cash);
+    document.getElementById('weeklyGoldAdjustment').textContent=money(Math.max(0,goldTotal-total*.25));
+    const weeklyRows=document.querySelectorAll('#weeklyStress tr');
+    [goldTotal*.1,twoStocks*.2,goldTotal*.1+twoStocks*.2].forEach((loss,index)=>{
+      setFinancial(weeklyRows[index].cells[1],-loss);
+      setFinancial(weeklyRows[index].cells[2],-share(loss),pct);
+    });
+    const funds = [...group('gold_etf'),...group('other_fund')];
+    const stockAccount = account(stocks+cash,detail.securitiesCapital ?? sum(group('stocks'),'basis')+cash);
+    const fundAccount = account(goldFunds+otherFunds,sum(funds,'basis'));
+    const bankAccount = account(goldAccount,sum(group('gold_acc'),'basis'));
+    const combined = account(total,sum([stockAccount,fundAccount,bankAccount],'capital'));
+
+    overview.querySelector('.big-num').textContent=money(total);
+    document.getElementById('portfolioPricingNote').textContent =
+      detail.hasMarket ? '动态估值 · 含现金 · '+ detail.fallbackCount + ' 项使用录入值' 
+        : '本地录入估值 · 含现金';
+    document.getElementById('overviewMarketValue').textContent=money(total-cash);
+    document.getElementById('overviewCash').textContent=money(cash);
+    document.getElementById('overviewCapital').textContent=money(combined.capital);
+    setFinancial(document.getElementById('overviewAccountDifference'),combined.pnl);
+    setFinancial(document.getElementById('overviewAccountReturn'),combined.rate,pct);
+    const baselineRate=originalSnapshot?.capital>0 ? (originalSnapshot.total/originalSnapshot.capital-1)*100 : null;
+    const signedPercent = value => value===null ? '待更新' : (value>0?'+':'')+pct(value);
+    setFinancial(document.getElementById('overviewBaselineChange'),
+      combined.rate===null || baselineRate===null ? null : combined.rate-baselineRate,value=>value===null?'待更新':(value>0?'+':'')+value.toFixed(2)+'%');
+    const holdings = assets.filter(asset=>asset.group!=='cash' && asset.qty!==0);
+    const heldStocks = holdings.filter(asset=>asset.group==='stocks');
+    const hasTodayReturn = asset => asset.quoteDate===detail.marketDate && Number.isFinite(asset.dailyChange);
+    const allReady = holdings.length>0 && holdings.every(hasTodayReturn);
+    const priced = allReady ? holdings : heldStocks.filter(hasTodayReturn);
+    const previousValue = priced.reduce((sum,asset)=>sum+asset.previousClose*asset.qty,0);
+    const todayChange = previousValue>0 ? priced.reduce((sum,asset)=>sum+asset.dailyChange,0) : null;
+    setFinancial(document.getElementById('overviewTodayPnl'),todayChange,value=>value===null?'待更新':money(value));
+    setFinancial(document.getElementById('overviewTodayRate'),todayChange===null?null:todayChange/previousValue*100,signedPercent);
+    const missingQuantity = holdings.some(asset=>asset.qty==null);
+    document.getElementById('overviewTodayPnlNote').textContent = allReady
+      ? '股票、基金及黄金按当日报价估算，现金不计入。'
+      : (priced.length ? '暂按股票估算（'+priced.length+'/'+heldStocks.length+' 项）。' : '等待当日可比股票行情。') +
+        (missingQuantity ? '补齐持仓份额或克数、且当日行情齐全后更新合计。' : '当日行情齐全后刷新更新合计。');
+
+    const metrics=overview.querySelectorAll('.metrics .metric');
+    [stocks,goldTotal,otherFunds].forEach((value,i)=>metrics[i].querySelector('.mini-number').textContent=money(value));
+    const stockPnl=sum(group('stocks'),'pnl');
+    const otherPnl=sum(group('other_fund'),'pnl');
+    const goldAssets=[...group('gold_acc'),...group('gold_etf')];
+    const knownGold=goldAssets.filter(asset=>asset.pnl!==null);
+    const goldPnl=knownGold.length ? sum(knownGold,'pnl') : null;
+    document.getElementById('goldOverviewPnl').textContent=goldPnl===null?'待更新':money(goldPnl);
+    document.getElementById('goldOverviewNote').textContent=knownGold.length<goldAssets.length
+      ? '（已知金额小计）':'';
+
+    document.getElementById('overviewStockPnl').textContent=money(stockPnl);
+    document.getElementById('overviewOtherPnl').textContent=money(otherPnl);
+
+    const charts=overview.querySelectorAll('.charts > .card');
+    const [allocation,breakdown]=charts;
+    let cursor=0;
+    const stops=values.map((value,i)=>{
+      const start=cursor;
+      cursor+=share(value);
+      const cell=allocation.querySelectorAll('.legendrow .num')[i];
+      const percent=document.createElement('small');
+      percent.textContent=pct(share(value));
+      cell.replaceChildren(money(value)+' ',percent);
+      return colors[i]+' '+start+'% '+cursor+'%';
+    });
+    allocation.querySelector('.donut').style.background=total>0?'conic-gradient('+stops.join(',')+')':'var(--border)';
+    allocation.querySelector('.capture').textContent='直接黄金占账户 '+pct(share(goldTotal))+'。';
+
+    breakdown.querySelector('.chart-title').textContent='盈亏与账户差额';
+    breakdown.querySelector('.chart-subtitle').textContent='条形长度按已知金额的绝对值占比绘制';
+    const differences=[sum([...group('gold_acc'),...group('gold_etf')],'pnl'),otherPnl,stockAccount.pnl];
+    const scale=differences.reduce((total,value)=>total+Math.abs(value??0),0);
+    breakdown.querySelectorAll('.loss-item').forEach((row,i)=>{
+      const value=differences[i];
+      const portion=scale ? Math.abs(value??0)/scale*100 : 0;
+      setFinancial(row.querySelector('strong'),value);
+      row.querySelector('small').textContent=value===null?'—':pct(portion);
+      row.querySelector('.loss-fill').style.width=portion+'%';
+    });
+    breakdown.querySelector('.callout').textContent='证券账户差额 = 股票市值 + 可用现金 − 估算投入。';
+
+    const rows=accounts.querySelectorAll('tbody tr, tfoot tr');
+    [stockAccount,fundAccount,bankAccount,combined].forEach(({capital,value,pnl,rate},i)=>{
+      const cells=rows[i].cells;
+      cells[1].textContent=money(capital);
+      cells[2].textContent=money(value);
+      setFinancial(cells[3],pnl);
+      setFinancial(cells[4],rate,pct);
+    });
+    rows[0].querySelector('.cell-note').textContent='含股票 '+money(stocks)+' 与现金 '+money(cash);
+    rows[2].querySelector('.cell-note').textContent='积存金按参考价估值';
+    accounts.querySelector('.callout').textContent='证券账户盈亏以累计投入或持仓成本与现金估算。';
+  }
+  document.addEventListener('portfolio-market-update',event=>update(event.detail));
+  document.addEventListener('portfolio-baseline-updated',event=>{
+    originalSnapshot=event.detail;
+    if(lastDetail) update(lastDetail);
+  });
+  const chartsDisclosure = document.getElementById('overviewCharts');
+  let chartsWereOpen = false;
+  window.addEventListener('beforeprint',()=>{
+    chartsWereOpen = chartsDisclosure.open;
+    chartsDisclosure.open = true;
+  });
+  window.addEventListener('afterprint',()=>{ chartsDisclosure.open = chartsWereOpen; });
+})();
+</script>
+<script>
+(() => {
+  const byId = id => document.getElementById(id);
+  const status = byId('marketStatus');
+  const button = byId('refreshMarket');
+  const topButton = byId('refreshMarketTop');
+  const originalTopLabel = topButton.textContent;
+  const refreshSections = ['overview','accounts','details','risk','weekly-risk','discipline'].map(byId);
+  const digitTargets = '.big-num, .mini-number, .overview-facts dd, .legendrow .num, .donut-center strong, .loss-line .num, #goldOverviewPnl, td.num';
+  let animationCleanup;
+  function cleanDigits() {
+    document.querySelectorAll('.market-digit').forEach(digit=>{
+      digit.replaceWith(document.createTextNode(digit.textContent));
+    });
+  }
+  function rollDigits(section) {
+    for (const element of section.querySelectorAll(digitTargets)) {
+      if (!element.getClientRects().length) continue;
+      const walker = document.createTreeWalker(element,NodeFilter.SHOW_TEXT);
+      const nodes = [];
+      while (walker.nextNode()) if (/\d/.test(walker.currentNode.data)) nodes.push(walker.currentNode);
+      let delay = 0;
+      for (const node of nodes) {
+        const fragment = document.createDocumentFragment();
+        for (const character of node.data) {
+          if (!/\d/.test(character)) {
+            fragment.append(character);
+            continue;
+          }
+          const digit = document.createElement('span');
+          const face = document.createElement('span');
+          digit.className = 'market-digit';
+          digit.dataset.previous = String((Number(character)+9)%10);
+          digit.style.setProperty('--digit-delay',Math.min(delay,100)+'ms');
+          face.textContent = character;
+          digit.append(face);
+          fragment.append(digit);
+          delay+=14;
+        }
+        node.replaceWith(fragment);
+      }
+    }
+  }
+  function setRefreshAnimation(phase) {
+    clearTimeout(animationCleanup);
+    cleanDigits();
+    for (const section of refreshSections) {
+      section.classList.toggle('market-loading',phase==='loading');
+      section.classList.toggle('market-updated',phase==='updated');
+      section.setAttribute('aria-busy',String(phase==='loading'));
+      if (phase==='updated' && !matchMedia('(prefers-reduced-motion: reduce)').matches) rollDigits(section);
+    }
+    if (phase==='updated') animationCleanup=setTimeout(cleanDigits,650);
+  }
+  const key='investment-panorama-online-portfolio-v2';
+  const currency=new Intl.NumberFormat('zh-CN',{style:'currency',currency:'CNY'});
+  const holdingDialog=byId('onlineHoldingDialog');
+  const holdingForm=byId('onlineHoldingForm');
+  const config=byId('onlineConfig');
+  const round=value=>Math.round(value*100)/100;
+  const today=()=>new Intl.DateTimeFormat('sv-SE',{timeZone:'Asia/Shanghai'}).format(new Date());
+  const dateOk=value=>typeof value==='string' && /^\d{4}-\d{2}-\d{2}$/.test(value);
+  const accountName=group=>group==='stocks'?'证券账户':group==='gold_acc'?'积存金账户':'基金账户';
+  const codePattern=group=>group==='stocks'?/^(sh|sz)\d{6}$/:group==='gold_acc'?/^Au99\.99$/:/^\d{6}$/;
+  const defaults=()=>({holdings:[],cash:0,cashDate:'',trades:[],capital:null,endpoint:''});
+  function endpoint(value) {
+    if (!value) return '';
+    const url=new URL(value);
+    if (url.protocol!=='https:' || url.username || url.password || url.search || url.hash) throw Error('行情服务地址须使用 HTTPS，且不能含凭据或参数。');
+    return url.href.replace(/\/+$/,'');
+  }
+  function validatePortfolio(value) {
+    const {holdings,cash,cashDate,trades,capital}=value ?? {};
+    if (!Array.isArray(holdings) || holdings.length>100 || !Array.isArray(trades) || trades.length>10000 ||
+        !Number.isFinite(cash) || cash<0 || (capital!==null && (!Number.isFinite(capital) || capital<0))) {
+      throw Error('账本格式无效。');
+    }
+    const names=new Set();
+    const clean=holdings.map(item=>{
+      const {name,group,code,qty,price,basis,date}=item;
+      if (typeof name!=='string' || !name.trim() || name.length>80 || names.has(name) ||
+          name==='证券账户可用现金' || !['stocks','other_fund','gold_etf','gold_acc'].includes(group) ||
+          typeof code!=='string' || (code && !codePattern(group).test(code)) ||
+          ![qty,price,basis].every(Number.isFinite) || qty<0 || price<0 ||
+          !Number.isFinite(qty*price) || (group==='stocks' && !Number.isInteger(qty))) throw Error('持仓格式无效或名称重复。');
+      names.add(name);
+      const quote=item.quote;
+      const valid=quote && dateOk(quote.date) && Number.isFinite(quote.price) && quote.price>0;
+      return {name,group,code,qty,price,basis,date:dateOk(date)?date:'',
+        quote:valid?{date:quote.date,price:quote.price,previousClose:Number.isFinite(quote.previousClose)&&quote.previousClose>0?quote.previousClose:null,
+          source:typeof quote.source==='string'?quote.source.slice(0,80):'行情服务',cached:quote.cached===true}:null};
+    });
+    const cleanedTrades=trades.map(item=>{
+      const {name,group,date,side,shares,price,fees,gross,net,cashChange,cashAfter}=item;
+      if (typeof name!=='string' || !dateOk(date) || !['买入','卖出'].includes(side) ||
+          ![shares,price,fees,gross,net].every(Number.isFinite) ||
+          (group==='stocks' && ![cashChange,cashAfter].every(Number.isFinite))) throw Error('成交记录格式无效。');
+      return {name,group,date,side,shares,price,fees,gross,net,cashChange,cashAfter};
+    });
+    return {holdings:clean,cash,cashDate:dateOk(cashDate)?cashDate:'',trades:cleanedTrades,capital,endpoint:endpoint(value.endpoint)};
+  }
+  let book=defaults();
+  let storageReadable=true;
+  try {
+    const saved=localStorage.getItem(key);
+    if (saved) book=validatePortfolio(JSON.parse(saved));
+    else {
+      const legacy=JSON.parse(localStorage.getItem('investment-panorama-online-v1') || 'null');
+      if (Array.isArray(legacy?.assets)) {
+        const groups={stock:'stocks',fund:'other_fund',gold:'gold_acc'};
+        const holdings=legacy.assets.filter(item=>!item.demo && Object.hasOwn(groups,item.kind)).map(item=>({
+          name:item.name,group:groups[item.kind],code:item.kind==='gold'?'Au99.99':item.code,
+          qty:item.qty,price:item.price,basis:item.cost,date:''
+        }));
+        const cash=legacy.assets.filter(item=>!item.demo && item.kind==='cash').reduce((sum,item)=>sum+item.qty*item.price,0);
+        book=validatePortfolio({...defaults(),holdings,cash});
+        if (holdings.length || cash) localStorage.setItem(key,JSON.stringify(book));
+      }
+    }
+  } catch {
+    storageReadable=false;
+    status.textContent='无法读取本地账本。请先导入有效备份。';
+  }
+  function persist(next,restore=false) {
+    if (!storageReadable && !restore) throw Error('原账本无法读取，请先导入备份。');
+    const validated=validatePortfolio(next);
+    localStorage.setItem(key,JSON.stringify(validated));
+    book=validated;
+    storageReadable=true;
+  }
+  function cashEntry() {
+    return {name:'证券账户可用现金',acct:'证券账户',group:'cash',code:'',qty:null,price:null,
+      basis:book.cash,cost:null,value:book.cash,pnl:null,rate:null,date:book.cashDate,
+      source:book.cashDate?'手动录入 / 成交流水':'待录入',remark:''};
+  }
+  function capitalValue() {
+    const holdings=book.holdings;
+    const stocks=holdings.filter(asset=>asset.group==='stocks').reduce((sum,asset)=>sum+asset.basis,0);
+    const rest=holdings.filter(asset=>asset.group!=='stocks').reduce((sum,asset)=>sum+asset.basis,0);
+    return (book.capital ?? stocks+book.cash)+rest;
+  }
+  function renderCashLedger() {
+    const list=byId('stockCashLedger');
+    list.replaceChildren();
+    for (const trade of [...book.trades].reverse()) {
+      const row=document.createElement('li');
+      const units={stocks:'股',gold_acc:'克',other_fund:'份',gold_etf:'份'};
+      row.textContent=trade.date+' · '+trade.name+' '+trade.side+' '+trade.shares+' '+units[trade.group]+' · '+currency.format(trade.net);
+      if (trade.group==='stocks') row.append(' · 现金 '+(trade.cashChange>0?'+':'')+
+        currency.format(trade.cashChange)+' · 余额 '+currency.format(trade.cashAfter));
+      list.append(row);
+    }
+    if (!list.children.length) {
+      const row=document.createElement('li');
+      row.textContent='暂无成交记录';
+      list.append(row);
+    }
+  }
+  function syncHoldings(recordDay=false) {
+    const marketDate=today();
+    const editors=new Map();
+    const live=book.holdings.map(asset=>{
+      const quote=asset.quote;
+      const price=quote?.price ?? asset.price;
+      const value=round(asset.qty*price);
+      const pnl=round(value-asset.basis);
+      const dailyComparable=quote?.previousClose>0 && (asset.group!=='stocks' || quote.date===marketDate);
+      const previousClose=dailyComparable?quote.previousClose:null;
+      const dailyChange=previousClose!==null?(price-previousClose)*asset.qty:null;
+      const dailyRate=previousClose!==null?(price/previousClose-1)*100:null;
+      const unit=asset.group==='stocks'?'股':asset.group==='gold_acc'?'克':'份';
+      editors.set(asset.name,{asset,code:asset.code});
+      return {...asset,acct:accountName(asset.group),unit,price,value,pnl,dailyChange,dailyRate,previousClose,
+        quoteDate:quote?.date,date:quote?.date ?? asset.date,fallback:!quote,
+        rate:asset.basis>0?pnl/asset.basis*100:null,cost:asset.qty>0?asset.basis/asset.qty:null,
+        source:quote ? quote.source+(quote.cached?'（缓存）':'') : '手动录入',remark:''};
+    });
+    const fullEntries=[...live,cashEntry()];
+    entries.splice(0,entries.length,...fullEntries);
+    renderCashLedger();
+    byId('marketSubtotal').textContent='已录入 '+live.length+' 项持仓 · 现金可手动更新';
+    document.dispatchEvent(new CustomEvent('portfolio-market-update',{detail:{
+      entries:fullEntries,editors,saveCash,saveStockTrade,editHolding,marketDate,
+      hasMarket:live.some(asset=>!asset.fallback),fallbackCount:live.filter(asset=>asset.fallback).length,
+      securitiesCapital:book.capital
+    }}));
+    if (recordDay) document.dispatchEvent(new CustomEvent('portfolio-daily-history',{detail:{entries:fullEntries,capital:capitalValue()}}));
+  }
+  function saveCash(value) {
+    try { persist({...book,cash:value,cashDate:today()}); } catch { return false; }
+    syncHoldings(true);
+    return true;
+  }
+  function saveStockTrade(editor,record) {
+    const original=editor.asset;
+    const position=book.holdings.find(asset=>asset.name===original.name);
+    if (!position || position.qty!==original.qty || position.basis!==original.basis) return '持仓已变化，请重新打开操作。';
+    const stock=original.group==='stocks';
+    const cashChange=stock?(record.side==='买入'?-record.net:record.net):null;
+    const cashAfter=stock?round(book.cash+cashChange):book.cash;
+    if (cashAfter<0) return '可用现金不足，请先核对证券账户现金。';
+    const holdings=book.holdings.map(asset=>asset===position?
+      {...asset,qty:record.remaining,basis:record.basis,date:today()}:asset);
+    const trade={...record,name:original.name,group:original.group,date:today(),cashChange,cashAfter};
+    try {
+      persist({...book,holdings,cash:cashAfter,cashDate:stock?today():book.cashDate,trades:[...book.trades,trade]});
+    } catch (error) { return error.message; }
+    syncHoldings(true);
+    status.textContent='成交与当天快照已保存。';
+    return true;
+  }
+  let lookupRequest=0;
+  async function lookupHoldingName() {
+    const request=++lookupRequest;
+    const fields=holdingForm.elements;
+    const group=fields.group.value;
+    const code=fields.code.value.trim().toLowerCase();
+    fields.name.readOnly=false;
+    if (!book.endpoint || group==='gold_acc' || !codePattern(group).test(code)) return;
+    const feedback=byId('onlineHoldingStatus');
+    feedback.textContent='正在核对证券代码…';
+    try {
+      const url=new URL(book.endpoint+'/asset-name');
+      url.searchParams.set('code',code);
+      const response=await fetch(url,{credentials:'omit',referrerPolicy:'no-referrer',redirect:'error',signal:AbortSignal.timeout(12000)});
+      if (!response.ok) throw Error();
+      const {name}=await response.json();
+      if (request!==lookupRequest || !holdingDialog.open) return;
+      if (typeof name!=='string' || !name.trim() || name.length>80) throw Error();
+      fields.name.value=name.trim();
+      fields.name.readOnly=true;
+      feedback.textContent='资产名称已按行情代码校正。';
+    } catch {
+      if (request===lookupRequest && holdingDialog.open) feedback.textContent='暂时无法核对代码，可手动填写名称。';
+    }
+  }
+  holdingForm.elements.code.addEventListener('input',()=>{
+    lookupRequest++;
+    holdingForm.elements.name.readOnly=false;
+  });
+  holdingForm.elements.code.addEventListener('change',lookupHoldingName);
+  holdingForm.elements.group.addEventListener('change',lookupHoldingName);
+  let editing=null;
+  function editHolding(asset=null) {
+    if (topButton.disabled || byId('assetsTable').querySelector('.holding-editor')) {
+      status.textContent=topButton.disabled?'请等待行情刷新结束。':'请先保存或取消当前行操作。';
+      return;
+    }
+    editing=asset?.name ?? null;
+    holdingForm.reset();
+    byId('onlineHoldingStatus').textContent='';
+    byId('onlineHoldingTitle').textContent=editing?'编辑持仓资料':'新增持仓';
+    for (const field of holdingForm.elements) if (field.name && asset?.[field.name]!=null) field.value=asset[field.name];
+    byId('deleteOnlineHolding').hidden=!editing;
+    holdingDialog.showModal();
+    lookupHoldingName();
+  }
+  byId('openAddHolding').onclick=()=>editHolding();
+  byId('cancelOnlineHolding').onclick=()=>holdingDialog.close();
+  byId('deleteOnlineHolding').onclick=()=>{
+    if (!editing || !confirm('从当前账本删除这项持仓？请用卖出功能登记实际成交。')) return;
+    try {
+      persist({...book,holdings:book.holdings.filter(asset=>asset.name!==editing)});
+      holdingDialog.close();
+      syncHoldings();
+      status.textContent='当前持仓已删除，历史快照仍保留。';
+    } catch (error) { byId('onlineHoldingStatus').textContent=error.message; }
+  };
+  holdingForm.onsubmit=event=>{
+    event.preventDefault();
+    try {
+      const fields=holdingForm.elements;
+      const next={name:fields.name.value.trim(),group:fields.group.value,code:fields.code.value.trim().toLowerCase(),
+        qty:fields.qty.valueAsNumber,price:fields.price.valueAsNumber,basis:fields.basis.valueAsNumber,date:today()};
+      if (next.group==='gold_acc') next.code='Au99.99';
+      const previous=book.holdings.find(item=>item.name===editing);
+      if (previous && next.group===previous.group && next.code===previous.code &&
+          next.price===(previous.quote?.price ?? previous.price)) next.quote=previous.quote;
+      const holdings=previous?book.holdings.map(item=>item===previous?next:item):[...book.holdings,next];
+      persist({...book,holdings});
+      holdingDialog.close();
+      syncHoldings();
+      status.textContent='持仓资料已保存。';
+    } catch (error) { byId('onlineHoldingStatus').textContent=error.message; }
+  };
+  byId('saveOnlineSnapshot').onclick=()=>{
+    if (!book.holdings.length && !book.cash) { status.textContent='请先录入持仓或现金。'; return; }
+    syncHoldings(true);
+    status.textContent='今日快照已保存。';
+  };
+  function fillConfig() {
+    config.elements.capital.value=book.capital ?? '';
+    config.elements.endpoint.value=book.endpoint;
+  }
+  config.onsubmit=event=>{
+    event.preventDefault();
+    try {
+      persist({...book,capital:config.elements.capital.value===''?null:config.elements.capital.valueAsNumber,
+        endpoint:config.elements.endpoint.value.trim()});
+      fillConfig();
+      syncHoldings();
+      status.textContent='设置已保存在当前浏览器。';
+    } catch (error) { status.textContent=error.message; }
+  };
+  async function refresh() {
+    if (button.disabled) return;
+    if (!book.endpoint) { status.textContent='请在「账户与行情设置」中填写 HTTPS 行情服务。'; return; }
+    if (byId('assetsTable').querySelector('.holding-editor')) { status.textContent='请先保存或取消当前行操作。'; return; }
+    const codes=[...new Set(book.holdings.filter(asset=>asset.qty>0 && asset.code).map(asset=>asset.code))];
+    if (!codes.length) { status.textContent='请先录入带有效证券代码的持仓。'; return; }
+    button.disabled=topButton.disabled=true;
+    topButton.textContent='刷新中…';
+    setRefreshAnimation('loading');
+    status.textContent='正在读取行情…';
+    try {
+      const url=new URL(book.endpoint+'/market-quotes');
+      url.searchParams.set('codes',codes.join(','));
+      const response=await fetch(url,{cache:'no-store',credentials:'omit',referrerPolicy:'no-referrer',redirect:'error',
+        signal:AbortSignal.timeout(30000)});
+      if (!response.ok) throw Error();
+      const data=await response.json();
+      if (!data.quotes || !Array.isArray(data.errors)) throw Error();
+      let received=0;
+      const holdings=book.holdings.map(asset=>{
+        const item=Object.hasOwn(data.quotes,asset.code)?data.quotes[asset.code]:null;
+        if (!item || !dateOk(item.date) || !Number.isFinite(item.price) || item.price<=0 ||
+            asset.quote?.date>item.date) return asset;
+        const cached=data.errors.includes(asset.code);
+        if (!cached) received++;
+        return {...asset,quote:{...item,cached}};
+      });
+      persist({...book,holdings});
+      syncHoldings(received>0);
+      setRefreshAnimation('updated');
+      status.textContent=received?'有效刷新 '+received+' 项，已保存当天快照。':'未收到新行情，保留已有报价。';
+    } catch {
+      setRefreshAnimation('idle');
+      status.textContent='行情刷新失败，已保留现有数据。请检查服务地址及跨域设置。';
+    } finally {
+      button.disabled=topButton.disabled=false;
+      topButton.textContent=originalTopLabel;
+    }
+  }
+  window.onlinePortfolio={
+    hasData:()=>Boolean(book.holdings.length || book.cash || book.trades.length),
+    export:()=>({holdings:book.holdings,cash:book.cash,cashDate:book.cashDate,capital:book.capital,trades:book.trades,endpoint:''}),
+    validate:validatePortfolio,
+    restore(value) { persist({...value,endpoint:book.endpoint},true); fillConfig(); syncHoldings(); }
+  };
+  topButton.addEventListener('click',refresh);
+  fillConfig();
+  syncHoldings();
+  if (book.endpoint && book.holdings.some(asset=>asset.qty>0 && asset.code)) refresh();
+  setInterval(()=>{
+    if (book.endpoint && book.holdings.some(asset=>asset.qty>0 && asset.code)) refresh();
+  },60*60*1000);
+})();
+</script>
+
+<script>
+(() => {
+  const toggle = document.getElementById('privacyToggle');
+  const root = document.documentElement;
+  function updateToggle() {
+    const hidden = root.dataset.privacy === 'hidden';
+    toggle.textContent = hidden ? '显示数据' : '隐藏数据';
+    toggle.setAttribute('aria-pressed', String(hidden));
+  }
+  toggle.addEventListener('click', () => {
+    if (root.dataset.privacy === 'hidden') delete root.dataset.privacy;
+    else root.dataset.privacy = 'hidden';
+    try {
+      if (root.dataset.privacy === 'hidden') sessionStorage.setItem('investment-panorama-online-privacy', 'hidden');
+      else sessionStorage.removeItem('investment-panorama-online-privacy');
+    } catch {}
+    updateToggle();
+  });
+  updateToggle();
+  toggle.hidden = false;
+})();
+</script>
+<script>
+(() => {
+  const clock = document.getElementById('headerToday');
+  const format = new Intl.DateTimeFormat('zh-CN', {
+    timeZone:'Asia/Shanghai', year:'numeric', month:'2-digit', day:'2-digit',
+    hour:'2-digit', minute:'2-digit', hourCycle:'h23'
+  });
+  function updateClock() {
+    const now = new Date();
+    clock.dateTime = now.toISOString();
+    clock.textContent = '北京时间 · ' + format.format(now);
+  }
+  updateClock();
+  setInterval(updateClock, 1000);
+})();
+</script>
+<dialog id="portfolioLockDialog" aria-labelledby="portfolioLockTitle">
+  <form>
+    <h2 id="portfolioLockTitle">页面已锁定</h2>
+    <label><span id="portfolioPinLabel">密码</span>
+      <input id="portfolioPin" type="password" autocomplete="off" required minlength="3" maxlength="5" pattern="[A-Za-z0-9]{3,5}">
+    </label>
+    <label id="portfolioNewPinLabel" hidden>新密码（3–5 位字母或数字）
+      <input id="portfolioNewPin" type="password" autocomplete="new-password" minlength="3" maxlength="5" pattern="[A-Za-z0-9]{3,5}" disabled>
+    </label>
+    <span id="portfolioLockStatus" role="status"></span>
+    <button class="btn" type="submit">继续</button>
+    <button class="btn" type="button" id="portfolioLockCancel" hidden>取消设置</button>
+  </form>
+</dialog>
+<script>
+(() => {
+  const key = 'investment-panorama-online-pin';
+  const dialog = document.getElementById('portfolioLockDialog');
+  const pin = document.getElementById('portfolioPin');
+  const status = document.getElementById('portfolioLockStatus');
+  const cancel = document.getElementById('portfolioLockCancel');
+  const button = document.createElement('button');
+  button.type = 'button';
+  button.className = 'btn';
+  button.textContent = '锁屏';
+  button.title = '快捷键：Option + Q（Windows：Alt + Q）';
+  button.setAttribute('aria-keyshortcuts','Alt+Q');
+  document.querySelector('.actions').append(button);
+  const changeButton = document.createElement('button');
+  changeButton.type = 'button';
+  changeButton.className = 'btn';
+  changeButton.textContent = '修改密码';
+  button.after(changeButton);
+  const newPin = document.getElementById('portfolioNewPin');
+  let changing = false;
+  let saved = null;
+  let previousFocus;
+  async function digest(value) {
+    const buffer = await crypto.subtle.digest('SHA-256',new TextEncoder().encode(value));
+    return Array.from(new Uint8Array(buffer),byte=>byte.toString(16).padStart(2,'0')).join('');
+  }
+  function flag(locked) {
+    try { sessionStorage.setItem(key,locked?'locked':'open'); } catch {}
+  }
+  function close() {
+    flag(false);
+    dialog.close();
+    document.documentElement.classList.remove('portfolio-locked');
+    previousFocus?.focus({preventScroll:true});
+  }
+  function lock(change = false) {
+    if (dialog.open) return;
+    changing = change;
+    newPin.value = '';
+    newPin.disabled = !changing;
+    newPin.required = changing;
+    newPin.parentElement.hidden = !changing;
+    document.getElementById('portfolioLockTitle').textContent = changing ? '修改密码' : '页面已锁定';
+    previousFocus = document.activeElement;
+    status.textContent = '';
+    pin.value = '';
+    document.getElementById('portfolioPinLabel').textContent = changing ? '输入原密码' : saved ? '输入密码' : '设置 3–5 位字母或数字';
+    const submit = dialog.querySelector('[type=submit]');
+    submit.hidden = Boolean(saved) && !changing;
+    submit.textContent = changing ? '保存新密码' : '设置并锁定';
+    cancel.hidden = Boolean(saved) && !changing;
+    cancel.textContent = changing ? '取消' : '取消设置';
+    if (saved && !changing) flag(true);
+    document.documentElement.classList.add('portfolio-locked');
+    dialog.showModal();
+    pin.focus({preventScroll:true});
+  }
+  try { saved = JSON.parse(localStorage.getItem(key)); } catch {}
+  changeButton.hidden = !saved;
+  button.addEventListener('click',()=>lock());
+  changeButton.addEventListener('click',()=>lock(true));
+  document.addEventListener('keydown',event=>{
+    if (event.altKey && !event.shiftKey && !event.ctrlKey && !event.metaKey && event.code==='KeyQ') {
+      event.preventDefault();
+      lock();
+    }
+  });
+  cancel.addEventListener('click',close);
+  dialog.addEventListener('cancel',event=>{
+    event.preventDefault();
+    if (!saved || changing) close();
+  });
+  let unlockAttempt = 0;
+  pin.addEventListener('input',async ()=>{
+    const attempt = ++unlockAttempt;
+    if (!saved || changing || !dialog.open) return;
+    const value = pin.value;
+    status.textContent = '';
+    if (!/^[A-Za-z0-9]{3,5}$/.test(value)) return;
+    try {
+      const hash = await digest(saved.salt+':'+value);
+      if (attempt!==unlockAttempt || pin.value!==value || !dialog.open || changing) return;
+      if (hash===saved.hash) {
+        pin.value='';
+        close();
+      } else if (value.length===5) status.textContent='密码不正确，请重试。';
+    } catch {
+      if (attempt===unlockAttempt) status.textContent='当前浏览器无法验证密码。';
+    }
+  });
+  dialog.querySelector('form').addEventListener('submit',async event=>{
+    event.preventDefault();
+    if ((saved && !changing) || !/^[A-Za-z0-9]{3,5}$/.test(pin.value)) return;
+    const submit = dialog.querySelector('[type=submit]');
+    submit.disabled=true;
+    try {
+      const salt = saved?.salt ?? Array.from(crypto.getRandomValues(new Uint32Array(4))).join('-');
+      const hash = await digest(salt+':'+pin.value);
+      pin.value='';
+      if (changing) {
+        if (hash!==saved.hash) {
+          status.textContent='原密码不正确，请重试。';
+          return;
+        }
+        const replacementSalt = Array.from(crypto.getRandomValues(new Uint32Array(4))).join('-');
+        const record = {salt:replacementSalt,hash:await digest(replacementSalt+':'+newPin.value)};
+        localStorage.setItem(key,JSON.stringify(record));
+        saved=record;
+        newPin.value='';
+        close();
+      } else if (!saved) {
+        const record = {salt,hash};
+        localStorage.setItem(key,JSON.stringify(record));
+        saved=record;
+        changeButton.hidden=false;
+        flag(true);
+        cancel.hidden=true;
+        submit.hidden=true;
+        document.getElementById('portfolioPinLabel').textContent='输入密码';
+        status.textContent='密码已设置。';
+      }
+    } catch {
+      status.textContent='当前浏览器无法保存或验证密码。';
+    } finally {
+      submit.disabled=false;
+      if (dialog.open) pin.focus();
+    }
+  });
+  try { if (saved && sessionStorage.getItem(key)==='locked') lock(); } catch {}
+})();
+</script>
+</body></html>
